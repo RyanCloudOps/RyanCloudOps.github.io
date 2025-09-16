@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gary — Cloud Portfolio</title>
+  <meta name="description" content="Portafolio de Cloud (Junior → Cloud Engineer → Cloud Architect). Proyectos, habilidades y contacto." />
+  <meta name="color-scheme" content="dark light" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b0f14;--panel:#0f1722;--text:#e6eefc;--muted:#9fb0c6;--brand:#6be7ff;--brand-2:#7c5cff;--ok:#22c55e;--warn:#f59e0b;
+      --ring: 0 0 0 2px rgba(107,231,255,.35), 0 10px 20px -10px rgba(124,92,255,.45);
+    }
+    :root.light{--bg:#f8fbff;--panel:#ffffff;--text:#0e1420;--muted:#5a6a83;--brand:#0ea5e9;--brand-2:#7c3aed;--ok:#16a34a;--warn:#b45309}
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,"Helvetica Neue",Arial,"Apple Color Emoji","Segoe UI Emoji";background:radial-gradient(1200px 600px at 80% -20%,rgba(124,92,255,.12),transparent 60%),linear-gradient(180deg,rgba(107,231,255,.08),transparent),var(--bg);color:var(--text)}
+    a{color:var(--brand);text-decoration:none}
+    a:hover{text-decoration:underline}
+    .container{max-width:1100px;margin-inline:auto;padding:24px}
+    header{position:sticky;top:0;backdrop-filter:saturate(180%) blur(10px);background:linear-gradient(180deg,rgba(15,23,34,.9),rgba(15,23,34,.6));border-bottom:1px solid rgba(255,255,255,.06);z-index:50}
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 24px}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:.3px}
+    .brand .logo{width:28px;height:28px;border-radius:9px;background:linear-gradient(135deg,var(--brand),var(--brand-2));display:grid;place-items:center;box-shadow:var(--ring)}
+    .brand .logo svg{width:18px;height:18px;fill:#001018}
+    .nav a{color:var(--text);opacity:.85;font-weight:600}
+    .nav ul{display:flex;gap:18px;list-style:none;margin:0;padding:0}
+    .btn{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(255,255,255,.1);background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.03));padding:10px 14px;border-radius:12px;color:var(--text);font-weight:600}
+    .btn:hover{box-shadow:var(--ring)}
+    .theme{border-radius:10px;padding:8px 10px;cursor:pointer}
+
+    /* Hero */
+    .hero{display:grid;grid-template-columns:1.2fr .8fr;gap:32px;align-items:center;padding:72px 24px}
+    .hero .title{font-size:clamp(28px,5vw,48px);line-height:1.05;margin:0}
+    .hero .title .gradient{background:linear-gradient(90deg,var(--brand),var(--brand-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+    .hero .lead{color:var(--muted);font-size:18px;margin:14px 0 22px}
+    .hero .badges{display:flex;gap:12px;flex-wrap:wrap}
+    .card{background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:18px}
+    .hero-visual{position:relative;min-height:260px}
+    .orb{position:absolute;inset:auto 0 0 auto;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle at 30% 30%,rgba(107,231,255,.6),transparent 60%),radial-gradient(circle at 70% 70%,rgba(124,92,255,.5),transparent 60%);filter:blur(10px);opacity:.7;animation:float 6s ease-in-out infinite}
+    .cli{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;background:#0a1220;border:1px solid rgba(255,255,255,.08);padding:14px;border-radius:14px;color:#d6e3ff;box-shadow:0 10px 30px -20px #000}
+    .cli .prompt{color:#7dd3fc}
+    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+
+    /* Sections */
+    section{padding:48px 24px}
+    .section-title{font-size:22px;margin:0 0 16px}
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+    .col-4{grid-column:span 4}
+    .col-6{grid-column:span 6}
+    .col-12{grid-column:span 12}
+    @media (max-width:900px){.hero{grid-template-columns:1fr}.grid{grid-template-columns:repeat(6,1fr)}.col-4{grid-column:span 6}.col-6{grid-column:span 6}}
+
+    /* Project cards */
+    .project{position:relative;overflow:hidden}
+    .project h3{margin:0 0 6px;font-size:18px}
+    .project p{margin:0;color:var(--muted)}
+    .tag{display:inline-block;padding:4px 8px;border-radius:999px;border:1px solid rgba(255,255,255,.12);font-size:12px;color:var(--muted)}
+
+    /* Skills */
+    .skills{display:flex;flex-wrap:wrap;gap:10px}
+    .skill{display:inline-flex;align-items:center;gap:8px;padding:10px 12px;border-radius:12px;border:1px solid rgba(255,255,255,.1);background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02))}
+    .skill svg{width:18px;height:18px;opacity:.9}
+
+    /* Timeline */
+    .timeline{position:relative;margin-top:8px}
+    .timeline::before{content:"";position:absolute;left:12px;top:0;bottom:0;width:2px;background:linear-gradient(var(--brand),var(--brand-2))}
+    .step{position:relative;padding-left:34px;margin:18px 0}
+    .step::before{content:"";position:absolute;left:6px;top:4px;width:14px;height:14px;border-radius:50%;background:var(--panel);border:2px solid var(--brand-2);box-shadow:0 0 0 4px rgba(124,92,255,.2)}
+    .step h4{margin:0}
+    .step p{margin:4px 0;color:var(--muted)}
+
+    /* Footer */
+    footer{padding:36px 24px;border-top:1px solid rgba(255,255,255,.08);color:var(--muted)}
+    .foot-links{display:flex;gap:16px;flex-wrap:wrap}
+
+    /* Chips */
+    .chip{display:inline-flex;align-items:center;gap:8px;border:1px dashed rgba(255,255,255,.2);padding:8px 10px;border-radius:12px;color:var(--muted)}
+    .sr-only{position:absolute;left:-10000px;height:1px;width:1px;overflow:hidden}
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="nav container">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">
+          <svg viewBox="0 0 24 24" role="img" aria-label="cloud"><path d="M6 18h11a5 5 0 0 0 0-10 6.5 6.5 0 0 0-12.3 2.4A4.5 4.5 0 0 0 6 18z"/></svg>
+        </div>
+        <span>Gary / <span class="gradient" style="background:linear-gradient(90deg,var(--brand),var(--brand-2));-webkit-background-clip:text;background-clip:text;color:transparent">Cloud</span></span>
+      </div>
+      <ul>
+        <li><a href="#proyectos">Proyectos</a></li>
+        <li><a href="#habilidades">Habilidades</a></li>
+        <li><a href="#ruta">Ruta</a></li>
+        <li><a href="#contacto" class="btn">Contacto</a></li>
+      </ul>
+      <button id="themeBtn" class="btn theme" title="Cambiar tema" aria-label="Cambiar tema">🌓</button>
+    </nav>
+  </header>
+
+  <main class="container">
+    <!-- HERO -->
+    <section class="hero" aria-labelledby="intro">
+      <div>
+        <h1 id="intro" class="title">Hola, soy <span class="gradient">Gary</span> — <span class="gradient">Junior Cloud Engineer</span> en progreso</h1>
+        <p class="lead">Construyendo un camino hacia Arquitecto Cloud. Aquí muestro proyectos con <strong>AWS/Azure/GCP</strong>, IaC con <strong>Terraform</strong>, contenedores <strong>Docker/Kubernetes</strong> y CI/CD.</p>
+        <div class="badges">
+          <span class="chip">🧭 Objetivo: Cloud Architect</span>
+          <span class="chip">📍 España</span>
+          <a class="btn" href="https://github.com/YOUR_GITHUB" target="_blank" rel="noopener">⭐ GitHub</a>
+          <a class="btn" href="#proyectos">🚀 Ver proyectos</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="orb" aria-hidden="true"></div>
+        <div class="cli" aria-label="Terminal de ejemplo" style="position:absolute;bottom:0;right:0;max-width:520px">
+          <div><span class="prompt">gary@cloud</span>:~$ terraform init</div>
+          <div>✔ Initialized empty backend</div>
+          <div><span class="prompt">gary@cloud</span>:~$ kubectl get nodes</div>
+          <div>NAME     STATUS   VERSION\nnode-1   Ready    v1.30.0</div>
+          <div><span class="prompt">gary@cloud</span>:~$ aws s3 ls</div>
+          <div>2025-09-01 prod-website-bucket</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROYECTOS -->
+    <section id="proyectos" aria-labelledby="proyectos-title">
+      <h2 id="proyectos-title" class="section-title">Proyectos destacados</h2>
+      <div class="grid">
+        <article class="project card col-6">
+          <div class="tag">IaC • Terraform • AWS</div>
+          <h3><a href="https://github.com/YOUR_GITHUB/terraform-aws-three-tier" target="_blank" rel="noopener">Infraestructura 3-tier en AWS</a></h3>
+          <p>VPC, subredes públicas/privadas, ASG, ALB y RDS con Terraform. Despliegue automático por GitHub Actions.</p>
+        </article>
+        <article class="project card col-6">
+          <div class="tag">Kubernetes • Helm</div>
+          <h3><a href="https://github.com/YOUR_GITHUB/k8s-observability" target="_blank" rel="noopener">Observabilidad en K8s</a></h3>
+          <p>Prometheus + Grafana + Loki en un clúster local y en AKS/GKE con charts de Helm y dashboards listos.</p>
+        </article>
+        <article class="project card col-6">
+          <div class="tag">CI/CD • GitHub Actions</div>
+          <h3><a href="https://github.com/YOUR_GITHUB/ci-cd-demo" target="_blank" rel="noopener">Pipeline CI/CD</a></h3>
+          <p>Build, test y despliegue a contenedor en GHCR, escaneo SAST y escaneo de imágenes con Trivy.</p>
+        </article>
+        <article class="project card col-6">
+          <div class="tag">GCP • Serverless</div>
+          <h3><a href="https://github.com/YOUR_GITHUB/gcp-serverless-notifier" target="_blank" rel="noopener">Notificador Serverless</a></h3>
+          <p>Cloud Run + Pub/Sub + Firestore para enviar alertas. Infra con Terraform, despliegue con Cloud Build.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- HABILIDADES -->
+    <section id="habilidades" aria-labelledby="habilidades-title">
+      <h2 id="habilidades-title" class="section-title">Habilidades</h2>
+      <div class="skills">
+        <span class="skill" title="Amazon Web Services">🔶 AWS</span>
+        <span class="skill" title="Microsoft Azure">🔷 Azure</span>
+        <span class="skill" title="Google Cloud Platform">🟡 GCP</span>
+        <span class="skill" title="Docker">🐳 Docker</span>
+        <span class="skill" title="Kubernetes">☸️ Kubernetes</span>
+        <span class="skill" title="Terraform">🌍 Terraform</span>
+        <span class="skill" title="Linux">🐧 Linux</span>
+        <span class="skill" title="Git & GitHub">🔧 Git/GitHub</span>
+        <span class="skill" title="CI/CD">⚙️ CI/CD</span>
+        <span class="skill" title="Bash & Python">💻 Bash / Python</span>
+      </div>
+    </section>
+
+    <!-- RUTA / TIMELINE -->
+    <section id="ruta" aria-labelledby="ruta-title">
+      <h2 id="ruta-title" class="section-title">Ruta: Junior → Engineer → Architect</h2>
+      <div class="timeline">
+        <div class="step">
+          <h4>Junior Cloud (0–6 meses)</h4>
+          <p>Fundamentos: Linux, redes, Git, Docker. Laboratorio: EC2 + S3 + IAM. Proyecto: landing estática en S3 + CloudFront.</p>
+        </div>
+        <div class="step">
+          <h4>Cloud Engineer (6–18 meses)</h4>
+          <p>IaC con Terraform, VPC avanzadas, RDS/Cloud SQL, pipelines CI/CD, monitoreo con Prometheus/Grafana.</p>
+        </div>
+        <div class="step">
+          <h4>Cloud Architect (18–36 meses)</h4>
+          <p>Patrones multi‑cuenta, networking a escala (Transit Gateway/VPN), seguridad (CIS), coste/Fiabilidad (Well‑Architected).</p>
+        </div>
+      </div>
+      <p class="muted">Certs sugeridas: AWS Cloud Practitioner → AWS SAA / Azure AZ‑104 → Google ACE.</p>
+    </section>
+
+    <!-- CONTACTO -->
+    <section id="contacto" aria-labelledby="contacto-title">
+      <h2 id="contacto-title" class="section-title">Contacto</h2>
+      <div class="card" style="display:grid;gap:10px;align-items:center;grid-template-columns:1fr auto">
+        <div>
+          <p style="margin:0;color:var(--muted)">¿Te interesa colaborar o tienes feedback? Escríbeme:</p>
+          <p style="margin:6px 0 0"><a href="mailto:youremail@example.com">youremail@example.com</a> · <a href="https://www.linkedin.com/in/YOUR_LINKEDIN" target="_blank" rel="noopener">LinkedIn</a></p>
+        </div>
+        <a class="btn" href="https://github.com/YOUR_GITHUB" target="_blank" rel="noopener">🔗 GitHub</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="container">
+    <div class="foot-links">
+      <span>© <span id="year"></span> Gary • Hecho con HTML/CSS • Deploy en GitHub Pages</span>
+      <a href="#">↑ Volver arriba</a>
+    </div>
+  </footer>
+
+  <script>
+    // Año dinámico
+    document.getElementById('year').textContent = new Date().getFullYear();
+    // Tema claro/oscuro (persistente)
+    const btn = document.getElementById('themeBtn');
+    const setTheme = (t)=>{
+      if(t==='light'){document.documentElement.classList.add('light')} else {document.documentElement.classList.remove('light')}
+      localStorage.setItem('theme',t)
+    };
+    const saved = localStorage.getItem('theme');
+    if(saved) setTheme(saved);
+    btn.addEventListener('click',()=>{
+      const isLight = document.documentElement.classList.toggle('light');
+      localStorage.setItem('theme', isLight ? 'light' : 'dark');
+    });
+  </script>
+</body>
+</html>
