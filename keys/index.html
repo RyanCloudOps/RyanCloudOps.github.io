@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Keys (Skills) | Gary Cloud</title>
+  <meta name="color-scheme" content="dark light" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#0b0f14;--panel:#0f1722;--text:#e6eefc;--muted:#9fb0c6;--brand:#6be7ff}
+    body{margin:0;font-family:Inter,system-ui;background:var(--bg);color:var(--text)}
+    header{background:#0f1722;position:sticky;top:0}
+    .nav{display:flex;justify-content:space-between;align-items:center;max-width:1100px;margin:auto;padding:12px 24px}
+    .nav ul{display:flex;gap:18px;list-style:none;margin:0;padding:0}
+    .nav a{color:var(--text);text-decoration:none;font-weight:600}
+    .nav a:hover{color:var(--brand)}
+    main{max-width:1100px;margin:auto;padding:24px}
+    h1{font-size:clamp(24px,4vw,36px)}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+    .card{background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:18px}
+    .pill{display:inline-block;border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:6px 10px;color:var(--muted);font-size:12px;margin-right:6px}
+    footer{border-top:1px solid rgba(255,255,255,.1);padding:24px;text-align:center;color:var(--muted)}
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="nav">
+      <strong>Gary / Cloud</strong>
+      <ul>
+        <li><a href="../index.html">Inicio</a></li>
+        <li><a href="../certificaciones/index.html">Certificaciones</a></li>
+        <li><a aria-current="page" href="#">Keys</a></li>
+        <li><a href="../proyectos/index.html">Proyectos</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Keys — Skills principales</h1>
+    <div class="grid">
+      <section class="card">
+        <h2>Cloud & IaC</h2>
+        <p><span class="pill">AWS</span><span class="pill">Azure</span><span class="pill">GCP</span><span class="pill">Terraform</span><span class="pill">Pulumi</span></p>
+        <p>Buenas prácticas: mínimos privilegios (IAM), etiquetado, módulos reutilizables, estados remotos.</p>
+      </section>
+      <section class="card">
+        <h2>Contenedores</h2>
+        <p><span class="pill">Docker</span><span class="pill">Kubernetes</span><span class="pill">Helm</span><span class="pill">Kustomize</span></p>
+        <p>Experiencia: despliegue en EKS/AKS/GKE, health checks, autoscaling, observabilidad.</p>
+      </section>
+      <section class="card">
+        <h2>CI/CD & QA</h2>
+        <p><span class="pill">GitHub Actions</span><span class="pill">GitLab CI</span><span class="pill">ArgoCD</span></p>
+        <p>Prácticas: test, escaneo SAST/DAST, escaneo de imágenes, despliegue progresivo.</p>
+      </section>
+      <section class="card">
+        <h2>Dev & Ops</h2>
+        <p><span class="pill">Linux</span><span class="pill">Bash</span><span class="pill">Python</span><span class="pill">Networking</span></p>
+        <p>Monitoreo: Prometheus, Grafana, Loki, Alertmanager. Logging centralizado.</p>
+      </section>
+    </div>
+  </main>
+
+  <footer>© <span id="year"></span> Gary • Keys</footer>
+  <script>document.getElementById('year').textContent=new Date().getFullYear()</script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Proyectos | Gary Cloud</title>
+  <meta name="color-scheme" content="dark light" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#0b0f14;--panel:#0f1722;--text:#e6eefc;--muted:#9fb0c6;--brand:#6be7ff}
+    body{margin:0;font-family:Inter,system-ui;background:var(--bg);color:var(--text)}
+    header{background:#0f1722;position:sticky;top:0}
+    .nav{display:flex;justify-content:space-between;align-items:center;max-width:1100px;margin:auto;padding:12px 24px}
+    .nav ul{display:flex;gap:18px;list-style:none;margin:0;padding:0}
+    .nav a{color:var(--text);text-decoration:none;font-weight:600}
+    .nav a:hover{color:var(--brand)}
+    main{max-width:1100px;margin:auto;padding:24px}
+    h1{font-size:clamp(24px,4vw,36px)}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+    .card{background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:18px}
+    .tag{display:inline-block;border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:6px 10px;color:var(--muted);font-size:12px;margin-right:6px}
+    .actions{display:flex;gap:10px;margin-top:10px}
+    .btn{display:inline-block;border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:8px 12px;color:var(--text);text-decoration:none}
+    .btn:hover{border-color:#6be7ff}
+    footer{border-top:1px solid rgba(255,255,255,.1);padding:24px;text-align:center;color:var(--muted)}
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="nav">
+      <strong>Gary / Cloud</strong>
+      <ul>
+        <li><a href="../index.html">Inicio</a></li>
+        <li><a href="../certificaciones/index.html">Certificaciones</a></li>
+        <li><a href="../keys/index.html">Keys</a></li>
+        <li><a aria-current="page" href="#">Proyectos</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Proyectos</h1>
+    <div class="grid">
+      <article class="card">
+        <h2>Infra 3‑tier en AWS</h2>
+        <p><span class="tag">Terraform</span><span class="tag">AWS</span><span class="tag">ALB</span><span class="tag">RDS</span></p>
+        <p>Arquitectura VPC, subredes públicas/privadas, autoscaling y base de datos gestionada. Despliegue con GitHub Actions.</p>
+        <div class="actions">
+          <a class="btn" href="https://github.com/YOUR_GITHUB/terraform-aws-three-tier" target="_blank" rel="noopener">Repo</a>
+          <a class="btn" href="#demo-aws">Demo</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <h2>Observabilidad K8s</h2>
+        <p><span class="tag">Kubernetes</span><span class="tag">Helm</span><span class="tag">Prometheus</span><span class="tag">Grafana</span></p>
+        <p>Stack de métricas y logs listo para AKS/GKE/EKS con dashboards básicos y alertas.</p>
+        <div class="actions">
+          <a class="btn" href="https://github.com/YOUR_GITHUB/k8s-observability" target="_blank" rel="noopener">Repo</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <h2>Pipeline CI/CD</h2>
+        <p><span class="tag">GitHub Actions</span><span class="tag">Docker</span><span class="tag">Trivy</span></p>
+        <p>Build + test + publicación de imagen y escaneo de seguridad en cada PR.</p>
+        <div class="actions">
+          <a class="btn" href="https://github.com/YOUR_GITHUB/ci-cd-demo" target="_blank" rel="noopener">Repo</a>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer>© <span id="year"></span> Gary • Proyectos</footer>
+  <script>document.getElementById('year').textContent=new Date().getFullYear()</script>
+</body>
+</html>
