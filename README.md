@@ -17,8 +17,6 @@ Abre http://localhost:5500
 - `styles.css` — estilo arcade (los colores son variables en `:root`)
 - `cv-gary-flores.pdf` — el CV que se descarga desde los botones
 
-## Publicar en GitHub Pages
+## WEB
 
-1. Sube estos archivos a la rama `main` del repo `Page`.
-2. Ve a Settings → Pages → Source: *Deploy from a branch* → `main` / `root`.
-3. La web queda en https://ryancloudops.github.io/Page/
+https://ryancloudops.github.io/Page/
