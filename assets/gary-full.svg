@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 1000" role="img" aria-label="Personaje de Gary de cuerpo entero">
+  <!-- shadow -->
+  <ellipse cx="150" cy="978" rx="95" ry="10" fill="#000" opacity=".12"/>
+  <!-- legs -->
+  <path d="M84 540 L150 540 L147 944 L96 944 Z" fill="#262f4f"/>
+  <path d="M150 540 L216 540 L204 944 L153 944 Z" fill="#262f4f"/>
+  <path d="M150 546 L150 944" stroke="#1a2140" stroke-width="3"/>
+  <!-- shoes -->
+  <path d="M90 940 L148 940 L152 968 Q118 982 76 972 Q76 952 90 940 Z" fill="#111"/>
+  <path d="M152 940 L210 940 Q224 952 224 972 Q182 982 148 968 Z" fill="#111"/>
+  <!-- arms (sleeves) -->
+  <path d="M66 280 Q40 296 36 380 L30 575 L64 582 L78 400 L90 292 Z" fill="#1b2442"/>
+  <path d="M234 280 Q260 296 264 380 L270 575 L236 582 L222 400 L210 292 Z" fill="#1b2442"/>
+  <!-- hands -->
+  <ellipse cx="45" cy="596" rx="14" ry="19" fill="#d19873"/>
+  <ellipse cx="255" cy="596" rx="14" ry="19" fill="#d19873"/>
+  <!-- jacket body -->
+  <path d="M62 330 C62 292 90 270 120 260 L180 260 C210 270 238 292 238 330 L232 560 L68 560 Z" fill="#1b2442"/>
+  <!-- belt hint -->
+  <rect x="84" y="540" width="132" height="8" fill="#10162c" opacity=".55"/>
+  <!-- shirt -->
+  <path d="M118 262 L150 400 L182 262 L168 252 L132 252 Z" fill="#fff"/>
+  <path d="M118 262 L136 252 L150 300 Z" fill="#e9ecf3"/>
+  <path d="M182 262 L164 252 L150 300 Z" fill="#e9ecf3"/>
+  <!-- lapels -->
+  <path d="M118 262 L96 430 L140 430 L148 330 Z" fill="#141b33"/>
+  <path d="M182 262 L204 430 L160 430 L152 330 Z" fill="#141b33"/>
+  <!-- buttons + pocket -->
+  <circle cx="150" cy="448" r="3.5" fill="#0c1124"/><circle cx="150" cy="500" r="3.5" fill="#0c1124"/>
+  <path d="M176 460 L206 458" stroke="#0c1124" stroke-width="3" stroke-linecap="round"/>
+  <!-- tie -->
+  <path d="M143 288 L157 288 L153 302 L163 400 L150 414 L137 400 L147 302 Z" fill="#1d2a52"/>
+  <!-- neck -->
+  <path d="M126 215 L174 215 L178 262 Q150 280 122 262 Z" fill="#b9805d"/>
+  <!-- ears -->
+  <ellipse cx="88" cy="172" rx="9" ry="14" fill="#c48d68"/>
+  <ellipse cx="212" cy="172" rx="9" ry="14" fill="#c48d68"/>
+  <!-- head -->
+  <ellipse cx="150" cy="168" rx="63" ry="74" fill="#d19873"/>
+  <!-- beard -->
+  <path d="M88 176 C90 238 122 258 150 258 C178 258 210 238 212 176 C204 208 186 222 150 222 C114 222 96 208 88 176 Z" fill="#17120f"/>
+  <path d="M122 206 Q150 194 178 206 Q150 214 122 206 Z" fill="#17120f"/>
+  <path d="M138 220 Q150 225 162 220" stroke="#a45a4a" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <!-- hair -->
+  <path d="M84 158 C76 98 108 70 150 70 C194 70 226 98 216 158 C212 128 194 108 150 108 C106 108 88 128 84 158 Z" fill="#14100d"/>
+  <g fill="#14100d">
+    <circle cx="92" cy="112" r="20"/><circle cx="116" cy="92" r="21"/><circle cx="146" cy="82" r="22"/>
+    <circle cx="178" cy="90" r="21"/><circle cx="204" cy="110" r="20"/><circle cx="84" cy="138" r="14"/>
+    <circle cx="216" cy="138" r="14"/><circle cx="132" cy="104" r="16"/><circle cx="168" cy="104" r="16"/>
+  </g>
+  <!-- brows / eyes / nose -->
+  <path d="M106 142 Q122 133 140 141" stroke="#14100d" stroke-width="6" fill="none" stroke-linecap="round"/>
+  <path d="M160 141 Q178 133 194 142" stroke="#14100d" stroke-width="6" fill="none" stroke-linecap="round"/>
+  <ellipse cx="122" cy="160" rx="6" ry="4.5" fill="#1a1410"/><ellipse cx="178" cy="160" rx="6" ry="4.5" fill="#1a1410"/>
+  <circle cx="124" cy="158.5" r="1.6" fill="#fff"/><circle cx="180" cy="158.5" r="1.6" fill="#fff"/>
+  <path d="M150 166 Q143 188 150 192 Q158 192 160 188" stroke="#a9704f" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <!-- glasses -->
+  <g fill="rgba(170,190,255,.14)" stroke="#2b2b2b" stroke-width="3.5">
+    <rect x="98" y="144" width="46" height="32" rx="7"/><rect x="156" y="144" width="46" height="32" rx="7"/>
+  </g>
+  <path d="M144 154 L156 154 M98 154 L86 151 M202 154 L214 151" stroke="#2b2b2b" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+  <path d="M104 150 L118 150 M162 150 L176 150" stroke="#fff" stroke-opacity=".5" stroke-width="3" stroke-linecap="round"/>
+</svg>
