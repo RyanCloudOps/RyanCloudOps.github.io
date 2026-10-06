@@ -46,8 +46,14 @@ h2 { font-size: clamp(30px, 4.6vw, 52px); line-height: 1.1; letter-spacing: -1.5
 .hero { position: relative; min-height: calc(100vh - 62px); display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr auto; align-items: end; padding: 0 0 48px; overflow: visible; isolation: isolate; }
 .hero::before { content: ""; position: absolute; inset: 0; z-index: -3; background: radial-gradient(ellipse 60% 70% at 50% 40%, color-mix(in srgb, var(--ink) 7%, transparent), transparent 70%); }
 .ghost-name { position: absolute; left: 50%; top: 4%; transform: translateX(-50%); z-index: -2; font-size: clamp(140px, 26vw, 380px); font-weight: 800; letter-spacing: .04em; line-height: 1; color: color-mix(in srgb, var(--ink) 7%, transparent); white-space: nowrap; user-select: none; }
-.hero-char { position: absolute; left: 56%; bottom: 0; transform: translateX(-50%); z-index: -1; height: min(92%, 860px); width: auto; filter: drop-shadow(0 30px 30px rgba(0,0,0,.12)); animation: float 6s ease-in-out infinite; }
-@keyframes float { 50% { transform: translateX(-50%) translateY(-8px); } }
+.hero-stage { position: absolute; left: 56%; bottom: 0; transform: translateX(-50%); z-index: -1; height: min(94%, 880px); aspect-ratio: 880 / 800; animation: rise 1s cubic-bezier(.2,.8,.2,1) both; cursor: pointer; pointer-events: auto; }
+@keyframes rise { from { opacity: 0; transform: translateX(-50%) translateY(60px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
+.poses { position: absolute; inset: 0; transform-origin: 50% 100%; animation: breathe 4.5s ease-in-out infinite; filter: drop-shadow(0 24px 24px rgba(0,0,0,.14)); }
+@keyframes breathe { 50% { transform: scale(1.012, 1.018); } }
+.poses img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; object-position: 50% 100%; opacity: 0; transform: translateY(10px) scale(.985); transform-origin: 50% 100%; transition: opacity .45s ease, transform .6s cubic-bezier(.2,.8,.2,1); pointer-events: none; user-select: none; }
+.poses img.on { opacity: 1; transform: none; }
+.bubble { position: absolute; left: 74%; top: 46%; max-width: 230px; margin: 0; padding: 10px 16px; background: var(--ink); color: var(--bg); font-size: 14px; font-weight: 500; line-height: 1.35; border-radius: 16px 16px 16px 4px; opacity: 0; transform: translateY(8px) scale(.94); transform-origin: 0 100%; transition: opacity .3s, transform .35s cubic-bezier(.2,.8,.2,1); pointer-events: none; }
+.bubble.show { opacity: 1; transform: none; }
 .hero-text { grid-column: 1; grid-row: 2; align-self: end; }
 .eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
 h1 { font-size: clamp(48px, 8vw, 112px); line-height: .95; letter-spacing: -4px; font-weight: 800; background: linear-gradient(160deg, var(--ink) 20%, color-mix(in srgb, var(--ink) 45%, transparent)); -webkit-background-clip: text; background-clip: text; color: transparent; }
@@ -175,7 +181,8 @@ h1 .dot { color: var(--muted); -webkit-text-fill-color: var(--muted); }
   .nav-actions { margin-left: auto; }
   .hero { grid-template-columns: 1fr; grid-template-rows: auto; min-height: 0; padding-top: 40px; gap: 18px; }
   .ghost-name { top: 0; }
-  .hero-char { position: relative; left: auto; bottom: auto; transform: none; grid-row: 1; justify-self: center; height: 420px; animation: none; }
+  .hero-stage { position: relative; left: auto; bottom: auto; transform: none; grid-row: 1; justify-self: center; height: 420px; animation: none; }
+  .bubble { left: 62%; top: 38%; max-width: 180px; font-size: 12px; }
   .hero-text { grid-row: 2; }
   .hero-cta { grid-column: 1; grid-row: 3; justify-self: start; justify-items: start; }
   .about { grid-template-columns: 1fr; gap: 28px; }
@@ -197,4 +204,5 @@ h1 .dot { color: var(--muted); -webkit-text-fill-color: var(--muted); }
   *, *::before, *::after { animation: none !important; transition: none !important; }
   html { scroll-behavior: auto; }
   .reveal { opacity: 1; transform: none; }
+  .hero-stage { transform: translateX(-50%); }
 }

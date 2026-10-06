@@ -123,6 +123,7 @@
     $$(".el").forEach(el => el.classList.toggle("off", activeCat !== "all" && el.dataset.cat !== activeCat));
     paintPhotoBtn();
     startTyping();
+    if (typeof say === "function" && bubble.textContent) bubble.textContent = SAY[sayIdx][lang];
   }
   $("#lang-btn").addEventListener("click", () => { lang = lang === "en" ? "es" : "en"; store.set("pf-lang", lang); applyLang(); });
 
@@ -182,6 +183,49 @@
   sc.addEventListener("pointerdown", e => { down = true; sx = e.clientX; sl = sc.scrollLeft; sc.classList.add("drag"); });
   window.addEventListener("pointerup", () => { down = false; sc.classList.remove("drag"); });
   sc.addEventListener("pointermove", e => { if (down) sc.scrollLeft = sl - (e.clientX - sx); });
+
+  // ---------- Hero character: poses + speech bubble ----------
+  const SAY = [
+    { p: 1, es: "¡Hola! Soy Gary 👋", en: "Hi! I'm Gary 👋" },
+    { p: 2, es: "Systems Engineer en Sothis", en: "Systems Engineer at Sothis" },
+    { p: 6, es: "De sysadmin a Cloud Architect", en: "From sysadmin to Cloud Architect" },
+    { p: 7, es: "Ahora: AWS, Terraform y Kubernetes", en: "Now: AWS, Terraform and Kubernetes" },
+    { p: 10, es: "3 nubes en mi ruta: Azure, AWS y GCP", en: "3 clouds on my path: Azure, AWS and GCP" },
+    { p: 11, es: "Certificado en virtualización VMware", en: "VMware virtualization certified" },
+    { p: 3, es: "Mira mi experiencia ←", en: "Check my experience ←" },
+    { p: 4, es: "Y mis skills por aquí →", en: "And my skills over here →" },
+    { p: 8, es: "Siguiente nivel: Terraform Associate", en: "Next level: Terraform Associate" },
+    { p: 9, es: "Uptime del 99.9% ✔", en: "99.9% uptime ✔" },
+    { p: 5, es: "Azure es mi nube principal", en: "Azure is my main cloud" },
+    { p: 12, es: "¿Hablamos?", en: "Shall we talk?" },
+  ];
+  const posesEl = $("#poses"), bubble = $("#bubble"), stage = $("#stage");
+  const poseImgs = [];
+  for (let n = 1; n <= 12; n++) {
+    const im = new Image();
+    im.src = `assets/poses/pose-${String(n).padStart(2, "0")}.webp`;
+    im.alt = ""; im.decoding = "async";
+    posesEl.appendChild(im); poseImgs[n] = im;
+  }
+  let sayIdx = 0, sayTimer = null, hovering = false;
+  function say(i) {
+    sayIdx = (i + SAY.length) % SAY.length;
+    const s = SAY[sayIdx];
+    poseImgs.forEach((im, n) => im && im.classList.toggle("on", n === s.p));
+    bubble.classList.remove("show");
+    setTimeout(() => { bubble.textContent = s[lang]; bubble.classList.add("show"); }, 260);
+  }
+  function loop() {
+    clearTimeout(sayTimer);
+    if (reduced) return;
+    sayTimer = setTimeout(() => { if (!hovering) say(sayIdx + 1); loop(); }, 3600);
+  }
+  stage.addEventListener("click", () => { say(sayIdx + 1); loop(); });
+  stage.addEventListener("mouseenter", () => { hovering = true; });
+  stage.addEventListener("mouseleave", () => { hovering = false; });
+  poseImgs[1].addEventListener("load", () => setTimeout(() => say(0), 500));
+  if (poseImgs[1].complete) setTimeout(() => say(0), 500);
+  loop();
 
   applyLang();
 })();
