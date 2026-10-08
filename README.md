@@ -19,7 +19,7 @@ Abre http://localhost:5500
 - `index.html` — contenido (el texto en español está aquí)
 - `script.js` — traducciones al inglés (`EN`), skills (`SK`), tarjeta ID, tema e idioma
 - `styles.css` — estilos (los colores son variables en `:root`)
-- `assets/gary-character.svg` — personaje ilustrado · `assets/gary.webp` — foto real
+- `assets/gary-id.webp` — retrato anime de la tarjeta ID · `assets/gary.webp` — foto real
 - `cv-gary-flores.pdf` — el CV que se descarga desde los botones
 - `arcade-backup/` — la versión anterior "Cloud Quest" (se puede borrar)
 

@@ -145,7 +145,7 @@
   function paintPhotoBtn() { photoBtn.textContent = (lang === "en" ? EN : ES)[realPhoto ? "id.char" : "id.photo"]; }
   photoBtn.addEventListener("click", () => {
     realPhoto = !realPhoto;
-    img.src = realPhoto ? "assets/gary.webp" : "assets/gary-character.svg";
+    img.src = realPhoto ? "assets/gary.webp" : "assets/gary-id.webp";
     img.alt = realPhoto ? "Foto de Gary" : "Personaje de Gary";
     card.classList.remove("flipped");
     paintPhotoBtn();
