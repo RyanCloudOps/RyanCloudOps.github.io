@@ -12,12 +12,12 @@
   const EN = {
     "nav.about": "About", "nav.skills": "Skills", "nav.exp": "Experience", "nav.ach": "Achievements", "nav.proj": "Projects", "nav.contact": "Contact",
     "hero.eyebrow": "Barcelona · Systems Engineer", "hero.hi": "Hi, I'm",
-    "hero.lead": "Systems Engineer in the PLM department at Sothis. My background is systems administration, virtualization and technical support, and I'm now levelling up in Cloud and DevOps.",
+    "hero.lead": "Systems Engineer at Sothis (PLM). I install, migrate and operate Siemens Teamcenter and Tecnomatix platforms on Windows Server, Active Directory, Tomcat and SQL Server. 3+ years in production; now taking that infrastructure foundation to Azure, AWS and DevOps.",
     "hero.contact": "Let's talk", "hero.work": "See projects →", "cv.short": "CV ↓", "cv": "Download CV",
     "id.hint": "↻ tap to flip", "id.role": "Role", "id.at": "Company", "id.loc": "Location", "id.study": "Studying", "id.langs": "Languages", "id.next": "Next",
     "id.quote": "Always learning, always building.", "id.photo": "See real photo", "id.char": "See character",
-    "about.title": "From sysadmin to future Cloud Architect.",
-    "about.p1": "I started in help desk, moved through software development, and today I install, migrate and maintain Siemens Teamcenter and Tecnomatix at Sothis. That systems foundation is what I'm now taking to the cloud.",
+    "about.title": "Systems Engineer today, Cloud Architect tomorrow.",
+    "about.p1": "I work in the PLM department at Sothis, where I install, migrate and maintain Siemens Teamcenter and Tecnomatix (server and clients). Before that I went through technical support and software development; that systems foundation is what I am now taking to the cloud.",
     "about.p2": "Azure is my main cloud; I'm training on AWS and have GCP on the roadmap, along with Terraform, Docker, Kubernetes and CI/CD.",
     "st.years": "years in IT", "st.langs": "languages", "st.certs": "certifications", "st.clouds": "clouds on the roadmap",
     "sk.title": "Periodic table of skills", "sk.hint": "Hover an element to read its description.", "sk.use": "in use", "sk.train": "in training",
@@ -145,7 +145,7 @@
   function paintPhotoBtn() { photoBtn.textContent = (lang === "en" ? EN : ES)[realPhoto ? "id.char" : "id.photo"]; }
   photoBtn.addEventListener("click", () => {
     realPhoto = !realPhoto;
-    img.src = realPhoto ? "assets/gary.webp?v=4" : "assets/gary-id.webp?v=4";
+    img.src = realPhoto ? "assets/gary.webp?v=5" : "assets/gary-id.webp?v=5";
     img.alt = realPhoto ? "Foto de Gary" : "Personaje de Gary";
     card.classList.remove("flipped");
     paintPhotoBtn();
@@ -188,7 +188,7 @@
   const SAY = [
     { es: "¡Hola! Soy Gary 👋", en: "Hi! I'm Gary 👋" },
     { es: "Systems Engineer en Sothis", en: "Systems Engineer at Sothis" },
-    { es: "De sysadmin a Cloud Architect", en: "From sysadmin to Cloud Architect" },
+    { es: "Systems Engineer hoy, Cloud Architect mañana", en: "Systems Engineer today, Cloud Architect tomorrow" },
     { es: "Ahora: AWS, Terraform y Kubernetes", en: "Now: AWS, Terraform and Kubernetes" },
     { es: "3 nubes en mi ruta: Azure, AWS y GCP", en: "3 clouds on my path: Azure, AWS and GCP" },
     { es: "Certificado en virtualización VMware", en: "VMware virtualization certified" },
