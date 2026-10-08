@@ -184,7 +184,7 @@
   window.addEventListener("pointerup", () => { down = false; sc.classList.remove("drag"); });
   sc.addEventListener("pointermove", e => { if (down) sc.scrollLeft = sl - (e.clientX - sx); });
 
-  // ---------- Hero character: 12-frame loop (cross-faded) + speech bubble ----------
+  // ---------- Hero character: two cross-faded clips (talking / arms crossed) + speech bubble ----------
   const SAY = [
     { es: "¡Hola! Soy Gary 👋", en: "Hi! I'm Gary 👋" },
     { es: "Systems Engineer en Sothis", en: "Systems Engineer at Sothis" },
@@ -197,40 +197,69 @@
     { es: "¿Hablamos?", en: "Shall we talk?" },
   ];
   const cv = $("#anim"), cx = cv.getContext("2d"), bubble = $("#bubble"), stage = $("#stage");
-  const COLS = 4, ROWS = 3, N = COLS * ROWS, FW = cv.width, FH = cv.height;
-  const LOOP_MS = 2000;                     // one full loop of the 12 frames
-  const sheet = new Image();
-  let sayIdx = 0, sayTimer = null, hovering = false, speed = 1;
-  function drawFrame(i, alpha) {
-    const col = i % COLS, row = Math.floor(i / COLS);
-    cx.globalAlpha = alpha;
-    cx.drawImage(sheet, col * FW, row * FH, FW, FH, 0, 0, FW, FH);
+  const CLIPS = {
+    talk: { src: "assets/gary-talk.webp", cols: 6, rows: 4, n: 24, fw: 319, fh: 720, loop: 4000 },
+    idle: { src: "assets/gary-anim.webp", cols: 4, rows: 3, n: 12, fw: 304, fh: 720, loop: 2000 },
+  };
+  Object.values(CLIPS).forEach(c => { c.img = new Image(); });
+  let cur = "idle", prev = null, switchAt = 0, sayIdx = 0, sayTimer = null, hideTimer = null, hovering = false;
+  const FADE_MS = 350;
+
+  function drawClip(c, t, alpha) {
+    const f = ((t / c.loop) * c.n) % c.n, i = Math.floor(f), k = f - i;
+    const put = (idx, a) => {
+      cx.globalAlpha = a;
+      cx.drawImage(c.img, (idx % c.cols) * c.fw, Math.floor(idx / c.cols) * c.fh, c.fw, c.fh,
+        (cv.width - c.fw) / 2, 0, c.fw, c.fh);
+    };
+    put(i, alpha);
+    if (!reduced && k > 0) put((i + 1) % c.n, alpha * k);   // cross-fade into the next frame
   }
   function render(t) {
-    const f = ((t / LOOP_MS) * N * speed) % N, i = Math.floor(f), k = f - i;
-    cx.clearRect(0, 0, FW, FH);
-    drawFrame(i, 1);
-    if (!reduced && k > 0) drawFrame((i + 1) % N, k);   // cross-fade into next frame
+    cx.clearRect(0, 0, cv.width, cv.height);
+    drawClip(CLIPS[cur], t, 1);
+    if (prev) {
+      const k = (performance.now() - switchAt) / FADE_MS;
+      if (k >= 1) prev = null; else drawClip(CLIPS[prev], t, 1 - k);   // old clip fades out on top
+    }
     cx.globalAlpha = 1;
   }
   function tick(t) { render(t); if (!reduced) requestAnimationFrame(tick); }
-  sheet.onload = () => { requestAnimationFrame(tick); setTimeout(() => say(0), 500); };
-  sheet.src = "assets/gary-anim.webp";
+  function setClip(name) {
+    if (name === cur) return;
+    prev = cur; cur = name; switchAt = performance.now();
+  }
 
   function say(i) {
     sayIdx = (i + SAY.length) % SAY.length;
+    clearTimeout(hideTimer);
     bubble.classList.remove("show");
-    setTimeout(() => { bubble.textContent = SAY[sayIdx][lang]; bubble.classList.add("show"); }, 260);
+    setTimeout(() => {
+      bubble.textContent = SAY[sayIdx][lang]; bubble.classList.add("show");
+      setClip("talk");
+    }, 260);
+    hideTimer = setTimeout(() => { bubble.classList.remove("show"); setClip("idle"); }, 3900);
   }
   function loop() {
     clearTimeout(sayTimer);
     if (reduced) return;
-    sayTimer = setTimeout(() => { if (!hovering) say(sayIdx + 1); loop(); }, 4200);
+    sayTimer = setTimeout(() => { if (!hovering) say(sayIdx + 1); loop(); }, 5600);
   }
   stage.addEventListener("click", () => { say(sayIdx + 1); loop(); });
   stage.addEventListener("mouseenter", () => { hovering = true; });
   stage.addEventListener("mouseleave", () => { hovering = false; });
-  loop();
+
+  let pending = Object.keys(CLIPS).length;
+  Object.values(CLIPS).forEach(c => {
+    c.img.onload = () => {
+      if (--pending) return;
+      if (reduced) { render(0); bubble.textContent = SAY[0][lang]; bubble.classList.add("show"); return; }
+      requestAnimationFrame(tick);
+      setTimeout(() => say(0), 600);
+      loop();
+    };
+    c.img.src = c.src;
+  });
 
   applyLang();
 })();
