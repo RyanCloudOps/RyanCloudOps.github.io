@@ -8,13 +8,18 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23111'/><text x='16' y='22' font-size='16' font-family='sans-serif' font-weight='700' text-anchor='middle' fill='%23fff'>G</text></svg>" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@1,500&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=5" />
+  <meta property="og:title" content="Gary Flores — Systems Engineer" />
+  <meta property="og:description" content="Systems Engineer en Sothis (PLM), camino a Cloud Architect." />
+  <meta property="og:image" content="https://ryancloudops.github.io/Page/assets/gary-hero.webp" />
+  <meta property="og:type" content="website" />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=9" />
 </head>
 <body>
-  <header class="nav">
+  <a class="skip" href="#top" data-i18n="skip">Saltar al contenido</a>
+  <header class="nav" id="nav">
     <a class="logo" href="#top"><span class="mark">GF</span><span class="who">Gary Flores</span></a>
-    <nav aria-label="Secciones">
+    <nav id="menu" aria-label="Secciones">
       <a href="#about" data-i18n="nav.about">Sobre mí</a>
       <a href="#skills" data-i18n="nav.skills">Skills</a>
       <a href="#experience" data-i18n="nav.exp">Experiencia</a>
@@ -25,15 +30,27 @@
     <div class="nav-actions">
       <button id="theme-btn" class="ghost" aria-label="Tema">◐</button>
       <button id="lang-btn" class="ghost" aria-label="Idioma">EN</button>
+      <button id="menu-btn" class="ghost menu-btn" aria-label="Menú" aria-expanded="false" aria-controls="menu"><i></i><i></i></button>
     </div>
   </header>
 
   <main id="top">
     <!-- HERO -->
-    <section class="hero">
+    <section class="hero" id="hero">
       <div class="ghost-name" aria-hidden="true">GARY</div>
-      <div class="hero-stage" id="stage" aria-label="Gary">
-        <canvas class="anim" id="anim" width="319" height="720" role="img" aria-label="Gary con los brazos cruzados"></canvas>
+
+      <!-- Easter egg: two halves to join, then break with the hammer -->
+      <button class="egg-half egg-l" id="egg-l" type="button" data-i18n-label="egg.half" aria-label="Mitad de un huevo de Pascua: arrástrala hasta la otra"></button>
+      <button class="egg-half egg-r" id="egg-r" type="button" data-i18n-label="egg.half" aria-label="Mitad de un huevo de Pascua: arrástrala hasta la otra"></button>
+      <p class="egg-tip" id="egg-tip" data-i18n="egg.tip" hidden>¡Rómpelo!</p>
+      <button class="hammer" id="hammer" type="button" data-i18n-label="egg.hammer" aria-label="Martillo: golpea el huevo" hidden>
+        <svg viewBox="0 0 64 64" aria-hidden="true"><rect x="28" y="24" width="8" height="38" rx="3" fill="#9a6a3a" stroke="#0b0b0b" stroke-width="2" /><rect x="10" y="8" width="44" height="18" rx="4" fill="#3b3b3b" stroke="#0b0b0b" stroke-width="2" /><rect x="14" y="11" width="18" height="4" rx="2" fill="#8a8a8a" /></svg>
+      </button>
+
+      <div class="hero-stage" id="stage">
+        <img class="anim poster" id="hero-poster" src="assets/gary-hero.webp?v=9" alt="" />
+        <canvas class="anim" id="anim" width="640" height="1080" role="img" aria-label="Gary, personaje 3D"></canvas>
+        <video class="vid-src" id="hero-vid" src="assets/gary-hero.mp4?v=9" muted playsinline loop preload="auto" aria-hidden="true"></video>
         <p class="bubble" id="bubble" aria-live="polite"></p>
       </div>
       <div class="hero-text">
@@ -61,7 +78,7 @@
             <span class="id-inner">
               <span class="id-face id-front">
                 <span class="id-top"><i></i><b>CLOUD ID</b></span>
-                <span class="id-photo"><img id="id-img" src="assets/gary-id.webp?v=4" alt="Personaje de Gary" /></span>
+                <span class="id-photo"><img id="id-img" src="assets/gary-id.webp?v=9" alt="Personaje de Gary" /></span>
                 <span class="id-name">GARY BRYAN F. P.</span>
                 <span class="id-sub">Systems Engineer</span>
                 <span class="id-hint" data-i18n="id.hint">↻ toca para girar</span>
@@ -94,6 +111,11 @@
           </ul>
         </div>
       </div>
+    </section>
+
+    <!-- TAGLINE -->
+    <section class="block tagline" aria-label="Tagline">
+      <p class="tagline-text" id="tagline" data-i18n="tagline">Mantengo en pie los sistemas de los que dependen equipos de ingeniería. Ahora llevo esa misma fiabilidad a la nube.</p>
     </section>
 
     <!-- SKILLS -->
@@ -201,6 +223,16 @@
   </main>
 
   <footer class="footer">© 2026 Gary Bryan Flores Peñafiel</footer>
-  <script src="script.js?v=5"></script>
+
+  <!-- Easter egg reward -->
+  <div class="egg-reveal" id="egg-reveal" role="dialog" aria-modal="true" aria-labelledby="egg-quote" hidden>
+    <button class="ghost egg-close" id="egg-close" data-i18n-label="egg.close" aria-label="Cerrar">✕</button>
+    <div class="egg-card">
+      <span class="egg-chick" aria-hidden="true">🐣</span>
+      <p class="egg-quote" id="egg-quote">Si puedes imaginarlo, puedes programarlo.</p>
+      <a class="btn solid egg-link" href="https://www.youtube.com/channel/UC7QoKU6bj1QbXQuNIjan82Q" target="_blank" rel="noopener">▶ Programación ATS</a>
+    </div>
+  </div>
+  <script src="script.js?v=9"></script>
 </body>
 </html>

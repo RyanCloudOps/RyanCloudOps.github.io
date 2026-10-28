@@ -1,1 +1,4 @@
 arcade-backup/
+
+# Raw source clips (the site uses the processed assets/gary-hero.mp4)
+assets/_raw/
