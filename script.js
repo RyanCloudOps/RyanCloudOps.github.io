@@ -45,7 +45,7 @@
     "c.title": "Let's talk?", "c.lead": "Looking for someone for your systems or cloud team? Drop me a line.",
     "skip": "Skip to content",
     "tagline": "I keep the systems engineering teams depend on up and running. Now I'm taking that same reliability to the cloud.",
-    "egg.half": "Half of an Easter egg: drag it onto the other one", "egg.tip": "Break it!", "egg.hammer": "Hammer: hit the egg", "egg.close": "Close",
+    "egg.half": "Half of an Easter egg: drag it onto the other one", "egg.tip": "Break it!", "egg.honor": "In honor of", "egg.quote": "If you can imagine it, you can program it.", "egg.hammer": "Hammer: hit the egg", "egg.close": "Close",
   };
   const CATS = {
     es: { all: "Todo", cloud: "Cloud", devops: "DevOps / IaC", sys: "Sistemas", code: "Código", db: "Bases de datos" },
@@ -226,9 +226,8 @@
   const BEATS = [
     { id: "hi", from: 0.2, to: 2.9, es: "¡Hola! Bienvenido a mi portafolio 👋", en: "Hi! Welcome to my portfolio 👋" },
     { id: "down", from: 3.1, to: 5, es: "Baja y mira lo que hago 👇", en: "Scroll down and see what I do 👇" },
-    { id: "egg", from: 9, to: 13.4, es: "Une las 2 piezas 🥚", en: "Join the 2 pieces 🥚", done: { es: "¡Lo rompiste! 🔨", en: "You broke it! 🔨" } },
   ];
-  const PEEK = [[5.5, 8.9]];   // he looks left and right: the egg halves glow
+  const PEEK = [];   // moments when the egg halves glow (none: the egg is meant to be found, not hinted)
   const hero = $("#hero"), cv = $("#anim"), vid = $("#hero-vid"), poster = $("#hero-poster"), bubble = $("#bubble");
   let beat = null;
   const egg = { state: "apart", hits: 0, solved: false, at: 0, moved: null, home: null };   // easter egg state (see below)
@@ -245,7 +244,7 @@
   }
   function syncTo(t) {
     showBeat(BEATS.find(b => t >= b.from && t < b.to) || null);
-    hero.classList.toggle("peek", egg.state === "apart" && (PEEK.some(([a, b]) => t >= a && t < b) || beat?.id === "egg"));
+    hero.classList.toggle("peek", egg.state === "apart" && (PEEK.some(([a, b]) => t >= a && t < b)));
   }
 
   // The green was keyed offline: top half is premultiplied colour, bottom half is alpha
@@ -280,7 +279,7 @@
   if (!draw) {
     // Still poster (reduced motion or no WebGL): just the welcome cloud
     vid.remove();
-    setTimeout(() => showBeat(BEATS[0]), 500);
+    (window.introReady || Promise.resolve()).then(() => setTimeout(() => showBeat(BEATS[0]), 500));
   } else {
     const hasVFC = "requestVideoFrameCallback" in HTMLVideoElement.prototype;
     const onFrame = () => {
@@ -291,7 +290,7 @@
     };
     if (vid.readyState >= 2) onFrame();   // the clip may have loaded before this script ran
     else vid.addEventListener("loadeddata", onFrame, { once: true });
-    const play = () => vid.play().catch(() => {
+    const play = () => (window.introReady || Promise.resolve()).then(() => vid.play()).catch(() => {
       showBeat(BEATS[0]);   // autoplay blocked (e.g. low-power mode): start on the first tap
       addEventListener("pointerdown", () => vid.play().catch(() => {}), { once: true });
     });
@@ -316,10 +315,10 @@
       <g clip-path="url(#egg-cut-${side})">
         <path class="shell" d="${EGG}" />
         <g clip-path="url(#egg-in-${side})" class="deco">
-          <circle cx="32" cy="34" r="4" /><circle cx="50" cy="24" r="4" /><circle cx="68" cy="34" r="4" />
-          <polyline class="zz" points="2,64 12,54 22,64 32,54 42,64 52,54 62,64 72,54 82,64 92,54 102,64" />
-          <rect x="0" y="80" width="100" height="10" />
-          <circle cx="34" cy="106" r="3" /><circle cx="50" cy="111" r="3" /><circle cx="66" cy="106" r="3" />
+          <circle cx="32" cy="30" r="3.5" /><circle cx="50" cy="22" r="3.5" /><circle cx="68" cy="30" r="3.5" />
+          <polyline class="zz" points="0,62 14,62 14,50 28,50 28,62 40,62 40,50 56,50 56,62 70,62 70,50 84,50 84,62 100,62" />
+          <rect x="0" y="76" width="100" height="14" /><g class="led"><rect x="14" y="81" width="14" height="4" rx="2" /><rect x="34" y="81" width="6" height="4" rx="2" /><circle cx="86" cy="83" r="2.5" /></g>
+          <text class="bin" x="50" y="112" text-anchor="middle">&gt;_ 01</text>
         </g>
         <ellipse class="shine" cx="30" cy="32" rx="5" ry="11" transform="rotate(20 30 32)" />
         <path class="crack c1" d="M24 40 L33 49 L28 57 L37 66" />

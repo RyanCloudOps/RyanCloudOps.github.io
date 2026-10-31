@@ -13,10 +13,26 @@
   <meta property="og:image" content="https://ryancloudops.github.io/Page/assets/gary-hero.webp" />
   <meta property="og:type" content="website" />
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=9" />
+  <link rel="stylesheet" href="styles.css?v=13" />
+  <script>try{if(sessionStorage.getItem("intro"))document.documentElement.classList.add("no-intro")}catch(e){}</script>
 </head>
 <body>
-  <a class="skip" href="#top" data-i18n="skip">Saltar al contenido</a>
+  <div class="intro" id="intro" role="status" aria-label="Cargando">
+    <div class="intro-box">
+      <p class="intro-cmd"><span class="u">gary@prod</span><span class="d"> :~$ </span><span id="intro-typed"></span><i class="caret"></i></p>
+      <ol class="intro-steps" id="intro-steps">
+        <li><b><svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3L13 4.5"/></svg></b><span>BUILD</span></li>
+        <li><b><svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3L13 4.5"/></svg></b><span>TEST</span></li>
+        <li><b><svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3L13 4.5"/></svg></b><span>DEPLOY</span></li>
+        <li><b><svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3L13 4.5"/></svg></b><span>RELEASE</span></li>
+      </ol>
+      <div class="intro-line"><span id="intro-status">› initializing build environment…</span><strong><span id="intro-pct">0</span><em>%</em></strong></div>
+    </div>
+  </div>
+  <canvas class="stars" id="stars" aria-hidden="true"></canvas>
+  <div class="cur-ring" id="cur-ring" aria-hidden="true"></div>
+  <div class="cur-dot" id="cur-dot" aria-hidden="true"></div>
+    <a class="skip" href="#top" data-i18n="skip">Saltar al contenido</a>
   <header class="nav" id="nav">
     <a class="logo" href="#top"><span class="mark">GF</span><span class="who">Gary Flores</span></a>
     <nav id="menu" aria-label="Secciones">
@@ -134,6 +150,7 @@
       <h2 data-i18n="exp.title">Recorrido</h2>
       <ol class="timeline">
         <li class="current">
+          <p class="git"><b>v3.0</b><span class="ref">HEAD → main · a3f9c21</span></p>
           <time data-i18n="w3.date">JUL 2023 – ACTUALIDAD</time>
           <h3>Sothis <small data-i18n="w3.role">Systems Engineer · Departamento PLM</small></h3>
           <ul>
@@ -144,6 +161,7 @@
           </ul>
         </li>
         <li>
+          <p class="git"><b>v2.0</b><span class="ref">b81d04e</span></p>
           <time data-i18n="w2.date">ABR 2022 – ABR 2023</time>
           <h3>Alten Spain <small data-i18n="w2.role">Desarrollador de software</small></h3>
           <ul>
@@ -153,6 +171,7 @@
           </ul>
         </li>
         <li>
+          <p class="git"><b>v1.0</b><span class="ref">init · 07c2e9a</span></p>
           <time data-i18n="w1.date">JUN 2021 – NOV 2021</time>
           <h3>Clicc <small>Technical Support Help Desk</small></h3>
           <ul>
@@ -228,11 +247,14 @@
   <div class="egg-reveal" id="egg-reveal" role="dialog" aria-modal="true" aria-labelledby="egg-quote" hidden>
     <button class="ghost egg-close" id="egg-close" data-i18n-label="egg.close" aria-label="Cerrar">✕</button>
     <div class="egg-card">
-      <span class="egg-chick" aria-hidden="true">🐣</span>
-      <p class="egg-quote" id="egg-quote">Si puedes imaginarlo, puedes programarlo.</p>
+      <svg class="egg-ribbon" viewBox="0 0 60 80" aria-hidden="true"><path d="M30 31C8 2 2 26 30 33C58 26 52 2 30 31Z"/><path d="M30 32L13 73L24 66L28 77L35 35Z"/><path d="M30 32L47 73L36 66L32 77L25 35Z"/></svg>
+      <p class="egg-tribute"><span data-i18n="egg.honor">En honor a</span> <strong>Alejandro Taboada Sánchez</strong></p>
+      <p class="egg-quote" id="egg-quote" data-i18n="egg.quote">Si puedes imaginarlo, puedes programarlo.</p>
       <a class="btn solid egg-link" href="https://www.youtube.com/channel/UC7QoKU6bj1QbXQuNIjan82Q" target="_blank" rel="noopener">▶ Programación ATS</a>
+      <p class="egg-sig" aria-hidden="true">$ echo "gracias por enseñarnos a imaginar" <i class="caret"></i></p>
     </div>
   </div>
-  <script src="script.js?v=9"></script>
+  <script src="intro.js?v=13"></script>
+  <script src="script.js?v=13"></script>
 </body>
 </html>
