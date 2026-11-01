@@ -13,8 +13,8 @@
   <meta property="og:image" content="https://ryancloudops.github.io/Page/assets/gary-hero.webp" />
   <meta property="og:type" content="website" />
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=15" />
-  <script>try{if(sessionStorage.getItem("intro"))document.documentElement.classList.add("no-intro")}catch(e){}</script>
+  <link rel="stylesheet" href="styles.css?v=18" />
+  <script>try{var d=document.documentElement;if(sessionStorage.getItem("intro"))d.classList.add("no-intro");d.dataset.theme=sessionStorage.getItem("pf-theme")||"dark"}catch(e){document.documentElement.dataset.theme="dark"}</script>
 </head>
 <body>
   <div class="intro" id="intro" role="status" aria-label="Cargando">
@@ -55,18 +55,14 @@
     <section class="hero" id="hero">
       <div class="ghost-name" aria-hidden="true">GARY</div>
 
-      <!-- Easter egg: two halves to join, then break with the hammer -->
-      <button class="egg-half egg-l" id="egg-l" type="button" data-i18n-label="egg.half" aria-label="Mitad de un huevo de Pascua: arrástrala hasta la otra"></button>
-      <button class="egg-half egg-r" id="egg-r" type="button" data-i18n-label="egg.half" aria-label="Mitad de un huevo de Pascua: arrástrala hasta la otra"></button>
-      <p class="egg-tip" id="egg-tip" data-i18n="egg.tip" hidden>¡Rómpelo!</p>
-      <button class="hammer" id="hammer" type="button" data-i18n-label="egg.hammer" aria-label="Martillo: golpea el huevo" hidden>
-        <svg viewBox="0 0 64 64" aria-hidden="true"><rect x="28" y="24" width="8" height="38" rx="3" fill="#9a6a3a" stroke="#0b0b0b" stroke-width="2" /><rect x="10" y="8" width="44" height="18" rx="4" fill="#3b3b3b" stroke="#0b0b0b" stroke-width="2" /><rect x="14" y="11" width="18" height="4" rx="2" fill="#8a8a8a" /></svg>
-      </button>
+      <!-- Hidden easter egg: two stars that look like part of the sky; join them to draw a constellation -->
+      <button class="egg-half egg-l" id="egg-l" type="button" data-i18n-label="egg.half" aria-label="Una estrella brillante: arrástrala hasta la otra"></button>
+      <button class="egg-half egg-r" id="egg-r" type="button" data-i18n-label="egg.half" aria-label="Una estrella brillante: arrástrala hasta la otra"></button>
 
       <div class="hero-stage" id="stage">
-        <img class="anim poster" id="hero-poster" src="assets/gary-hero.webp?v=15" alt="" />
+        <img class="anim poster" id="hero-poster" src="assets/gary-hero.webp?v=18" alt="" />
         <canvas class="anim" id="anim" width="640" height="1080" role="img" aria-label="Gary, personaje 3D"></canvas>
-        <video class="vid-src" id="hero-vid" src="assets/gary-hero.mp4?v=15" muted playsinline loop preload="auto" aria-hidden="true"></video>
+        <video class="vid-src" id="hero-vid" src="assets/gary-hero.mp4?v=18" muted playsinline loop preload="auto" aria-hidden="true"></video>
         <div class="kbd" id="kbd" aria-hidden="true"></div>
         <p class="bubble" id="bubble" aria-live="polite"></p>
       </div>
@@ -242,20 +238,25 @@
     </section>
   </main>
 
+  <!-- Hidden: the Draco constellation. Brush the stars with the cursor and a dragon (and a Sun Tzu quote) appears -->
+  <div class="sky" id="sky">
+    <blockquote class="sky-quote" id="sky-quote"><q data-i18n="sky.quote">Toda guerra se basa en el engaño.</q><cite data-i18n="sky.cite">— Sun Tzu · El arte de la guerra</cite></blockquote>
+  </div>
+
   <footer class="footer">© 2026 Gary Bryan Flores Peñafiel</footer>
 
   <!-- Easter egg reward -->
   <div class="egg-reveal" id="egg-reveal" role="dialog" aria-modal="true" aria-labelledby="egg-quote" hidden>
     <button class="ghost egg-close" id="egg-close" data-i18n-label="egg.close" aria-label="Cerrar">✕</button>
+    <svg class="egg-ribbon" viewBox="0 -10 100 150" aria-label="Lazo negro de luto" role="img"><defs><linearGradient id="rb" gradientUnits="userSpaceOnUse" x1="20" y1="0" x2="80" y2="140"><stop offset="0" stop-color="#6a6a6a"/><stop offset=".45" stop-color="#262626"/><stop offset="1" stop-color="#0a0a0a"/></linearGradient><clipPath id="rbc"><polygon points="0,-10 100,-10 100,140 76,140 68,130 60,140 40,140 32,130 24,140 0,140"/></clipPath></defs><g clip-path="url(#rbc)" fill="none" stroke-linejoin="round"><path id="rbp" d="M32 136C38 104 44 84 50 64C56 44 72 28 66 12C60-2 38-2 34 12C28 28 44 44 50 64C56 84 62 104 68 136" stroke="url(#rb)" stroke-width="15"/><path d="M50 64C56 84 62 104 68 136" stroke="url(#rb)" stroke-width="15"/></g></svg>
     <div class="egg-card">
-      <svg class="egg-ribbon" viewBox="0 0 60 80" aria-hidden="true"><path d="M30 31C8 2 2 26 30 33C58 26 52 2 30 31Z"/><path d="M30 32L13 73L24 66L28 77L35 35Z"/><path d="M30 32L47 73L36 66L32 77L25 35Z"/></svg>
-      <p class="egg-tribute"><span data-i18n="egg.honor">En honor a</span> <strong>Alejandro Taboada Sánchez</strong></p>
+      <p class="egg-tribute"><strong>Alejandro Taboada Sánchez</strong></p>
       <p class="egg-quote" id="egg-quote" data-i18n="egg.quote">Si puedes imaginarlo, puedes programarlo.</p>
       <a class="btn solid egg-link" href="https://www.youtube.com/channel/UC7QoKU6bj1QbXQuNIjan82Q" target="_blank" rel="noopener">▶ Programación ATS</a>
       <p class="egg-sig" aria-hidden="true">$ echo "gracias por enseñarnos a imaginar" <i class="caret"></i></p>
     </div>
   </div>
-  <script src="intro.js?v=15"></script>
-  <script src="script.js?v=15"></script>
+  <script src="intro.js?v=18"></script>
+  <script src="script.js?v=18"></script>
 </body>
 </html>

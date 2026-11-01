@@ -45,7 +45,7 @@
     "c.title": "Let's talk?", "c.lead": "Looking for someone for your systems or cloud team? Drop me a line.",
     "skip": "Skip to content",
     "tagline": "I keep the systems engineering teams depend on up and running. Now I'm taking that same reliability to the cloud.",
-    "egg.half": "Half of an Easter egg: drag it onto the other one", "egg.tip": "Break it!", "egg.honor": "In honor of", "egg.quote": "If you can imagine it, you can program it.", "egg.hammer": "Hammer: hit the egg", "egg.close": "Close",
+    "egg.half": "A bright star: drag it onto the other one", "egg.tip": "Break it!", "egg.honor": "In honor of", "sky.quote": "All warfare is based on deception.", "sky.cite": "— Sun Tzu · The Art of War", "egg.quote": "If you can imagine it, you can program it.", "egg.hammer": "Hammer: hit the egg", "egg.close": "Close",
   };
   const CATS = {
     es: { all: "Todo", cloud: "Cloud", devops: "DevOps / IaC", sys: "Sistemas", code: "Código", db: "Bases de datos" },
@@ -135,12 +135,11 @@
 
   // ---------- Theme ----------
   const root = document.documentElement;
-  const savedTheme = store.get("pf-theme");
-  if (savedTheme) root.dataset.theme = savedTheme;
-  else if (matchMedia("(prefers-color-scheme: dark)").matches) root.dataset.theme = "dark";
+  // Always starts dark; a manual switch only lasts for the current tab session
+  root.dataset.theme = sessionStorage.getItem("pf-theme") || "dark";
   $("#theme-btn").addEventListener("click", () => {
     root.dataset.theme = root.dataset.theme === "dark" ? "light" : "dark";
-    store.set("pf-theme", root.dataset.theme);
+    sessionStorage.setItem("pf-theme", root.dataset.theme);
   });
 
   // ---------- ID card ----------
@@ -312,50 +311,15 @@
     new IntersectionObserver(([en]) => { en.isIntersecting ? play() : vid.pause(); }, { threshold: 0.05 }).observe(hero);
   }
 
-  // ---------- Easter egg: join the two halves, then break it with the hammer ----------
-  const halves = [$("#egg-l"), $("#egg-r")], hammer = $("#hammer"), eggTip = $("#egg-tip");
+  // ---------- Hidden easter egg: two bright stars; drag one onto the other to draw a constellation ----------
+  const halves = [$("#egg-l"), $("#egg-r")];
   const reveal = $("#egg-reveal"), revealClose = $("#egg-close");
-  const SNAP = 70;   // px between the halves' centres that counts as "joined"
-  const ZIG = [[50, 0], [43, 18], [57, 34], [44, 50], [58, 66], [43, 82], [57, 98], [45, 114], [50, 130]];
-  const EGG = "M50 4C78 4 96 52 96 82C96 110 76 126 50 126C24 126 4 110 4 82C4 52 22 4 50 4Z";
-  const pts = a => a.map(p => p.join(",")).join(" ");
-  const eggSVG = side => {
-    const cut = side === "l" ? [[0, 0], ...ZIG, [0, 130]] : [[100, 0], ...ZIG, [100, 130]];
-    return `<svg viewBox="0 0 100 130" aria-hidden="true">
-      <defs>
-        <clipPath id="egg-cut-${side}"><polygon points="${pts(cut)}" /></clipPath>
-        <clipPath id="egg-in-${side}"><path d="${EGG}" /></clipPath>
-      </defs>
-      <g clip-path="url(#egg-cut-${side})">
-        <path class="shell" d="${EGG}" />
-        <g clip-path="url(#egg-in-${side})" class="deco">
-          <circle cx="32" cy="30" r="3.5" /><circle cx="50" cy="22" r="3.5" /><circle cx="68" cy="30" r="3.5" />
-          <polyline class="zz" points="0,62 14,62 14,50 28,50 28,62 40,62 40,50 56,50 56,62 70,62 70,50 84,50 84,62 100,62" />
-          <rect x="0" y="76" width="100" height="14" /><g class="led"><rect x="14" y="81" width="14" height="4" rx="2" /><rect x="34" y="81" width="6" height="4" rx="2" /><circle cx="86" cy="83" r="2.5" /></g>
-          <text class="bin" x="50" y="112" text-anchor="middle">&gt;_ 01</text>
-        </g>
-        <ellipse class="shine" cx="30" cy="32" rx="5" ry="11" transform="rotate(20 30 32)" />
-        <path class="crack c1" d="M24 40 L33 49 L28 57 L37 66" />
-        <path class="crack c2" d="M74 28 L64 42 L71 51 L62 62 L69 74" />
-        <path class="crack c3" d="M14 98 L28 92 L36 100 L50 90 L62 100 L76 92 L88 100" />
-        <path class="outline" d="${EGG}" />
-        <polyline class="seam" points="${pts(ZIG)}" />
-      </g>
-    </svg>`;
-  };
-  halves[0].innerHTML = eggSVG("l");
-  halves[1].innerHTML = eggSVG("r");
-
-  // The right half sits where Gary points at 12–13.4 s, as a fraction of the stage (layout box, so the rise animation doesn't matter)
-  const EGG_SPOT = [0.92, 0.72], stage = $("#stage");
-  function placeSpot() {
-    const h = halves[1], sx = stage.getBoundingClientRect().left - hero.getBoundingClientRect().left;
-    h.style.right = "auto";
-    h.style.left = sx + EGG_SPOT[0] * stage.offsetWidth - h.offsetWidth / 2 + "px";
-    h.style.top = stage.offsetTop + EGG_SPOT[1] * stage.offsetHeight - h.offsetHeight / 2 + "px";
-  }
-  placeSpot();
-  addEventListener("resize", placeSpot);
+  const SNAP = 64;   // px between the stars' centres that counts as "joined"
+  const STAR = `<svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="15" fill="currentColor" opacity=".08" /><path d="M20 1L24.5 15.5L39 20L24.5 24.5L20 39L15.5 24.5L1 20L15.5 15.5Z" fill="currentColor" /></svg>`;
+  const CON = `<svg viewBox="0 0 120 130" aria-hidden="true"><polyline pathLength="1" points="22,100 60,18 98,100" /><polyline pathLength="1" points="38,70 82,70" />
+    <circle cx="22" cy="100" r="3.5" /><circle cx="60" cy="18" r="4.5" /><circle cx="98" cy="100" r="3.5" /><circle cx="38" cy="70" r="2.5" /><circle cx="82" cy="70" r="2.5" /><text x="60" y="124">ATS</text></svg>`;
+  halves.forEach(h => (h.innerHTML = STAR));
+  let con = null;
 
   const other = h => halves[h === halves[0] ? 1 : 0];
   const center = el => { const r = el.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; };
@@ -363,57 +327,22 @@
   const off = new Map(halves.map(h => [h, [0, 0]]));
   const place = (h, x, y) => { off.set(h, [x, y]); h.style.translate = `${x}px ${y}px`; };
 
-  function align() {
-    const h = egg.moved, o = other(h), [a, b] = center(h), [c, d] = center(o), [x, y] = off.get(h);
-    place(h, x + c - a, y + d - b);
-    // Tip above the egg, hammer beside it (on whichever side has room)
-    const r = o.getBoundingClientRect(), hr = hero.getBoundingClientRect();
-    const left = r.left - hr.left, top = r.top - hr.top, flip = left + r.width / 2 > hr.width / 2;
-    eggTip.style.left = left + r.width / 2 + "px";
-    eggTip.style.top = top - 14 + "px";
-    hammer.classList.toggle("flip", flip);
-    hammer.style.left = (flip ? left - r.width * 0.55 : left + r.width * 0.75) + "px";
-    hammer.style.top = top - r.height * 0.05 + "px";
-  }
   function join(h) {
-    egg.state = "joined"; egg.at = performance.now(); egg.moved = h;
-    hero.classList.add("egg-joined");   // stops the floating so the halves line up exactly
+    egg.state = "done"; egg.solved = true;
     h.classList.add("snap");
-    align();
-    eggTip.hidden = hammer.hidden = false;
-    void hammer.offsetWidth;
-    eggTip.classList.add("show"); hammer.classList.add("show");
+    const [a, b] = center(h), [c, d] = center(other(h)), [x, y] = off.get(h);
+    place(h, x + c - a, y + d - b);
+    const hr = hero.getBoundingClientRect();
+    con = document.createElement("div");
+    con.className = "con";
+    con.innerHTML = CON;
+    con.style.left = c - hr.left + "px"; con.style.top = d - hr.top + "px";
+    hero.appendChild(con);
+    setTimeout(openReveal, 2300);
   }
   function hint(h) {
     h.classList.remove("wiggle"); void h.offsetWidth; h.classList.add("wiggle");
-    setTimeout(() => h.classList.remove("wiggle"), 500);   // hand the transform back to the floating loop
-  }
-  function hit() {
-    if (egg.state !== "joined" || performance.now() - egg.at < 400) return;   // ignore the click that ends the drag
-    egg.hits++;
-    hammer.classList.remove("swing"); void hammer.offsetWidth; hammer.classList.add("swing");
-    setTimeout(() => {   // the blow lands mid-swing
-      hero.dataset.cracks = Math.min(egg.hits, 3);
-      halves.forEach(x => { x.classList.remove("shake"); void x.offsetWidth; x.classList.add("shake"); });
-      if (egg.hits >= 3) smash();
-    }, 170);
-  }
-  function smash() {
-    egg.state = "broken"; egg.solved = true;
-    eggTip.classList.remove("show"); hammer.classList.remove("show");
-    const [cx0, cy0] = center(egg.home = other(egg.moved)), hr = hero.getBoundingClientRect();
-    for (let i = 0; i < 14; i++) {
-      const s = document.createElement("i"), ang = (i / 14) * Math.PI * 2 + Math.random() * 0.4, dist = 70 + Math.random() * 90;
-      s.className = "shard";
-      s.style.left = cx0 - hr.left + "px"; s.style.top = cy0 - hr.top + "px";
-      s.style.setProperty("--dx", Math.cos(ang) * dist + "px");
-      s.style.setProperty("--dy", Math.sin(ang) * dist + 40 + "px");
-      s.style.setProperty("--r", (Math.random() * 540 - 270) + "deg");
-      hero.appendChild(s);
-      setTimeout(() => s.remove(), 1100);
-    }
-    halves.forEach(x => x.classList.add("burst"));
-    setTimeout(openReveal, 650);
+    setTimeout(() => h.classList.remove("wiggle"), 600);
   }
   function openReveal() {
     reveal.hidden = false;
@@ -429,11 +358,9 @@
     setTimeout(() => { reveal.hidden = true; resetEgg(); }, 400);
   }
   function resetEgg() {
-    Object.assign(egg, { state: "apart", hits: 0, moved: null });
-    eggTip.hidden = hammer.hidden = true;
-    delete hero.dataset.cracks;
-    hero.classList.remove("egg-joined");
-    halves.forEach(h => { h.classList.remove("burst", "snap", "shake"); place(h, 0, 0); });
+    Object.assign(egg, { state: "apart", moved: null });
+    con?.remove(); con = null;
+    halves.forEach(h => { h.classList.remove("snap"); place(h, 0, 0); });
   }
 
   halves.forEach(h => {
@@ -464,15 +391,12 @@
     h.addEventListener("pointerup", end);
     h.addEventListener("pointercancel", end);
     h.addEventListener("click", e => {
-      if (egg.state === "joined") hit();
-      else if (egg.state === "apart" && e.detail === 0) join(h);   // keyboard: Enter/Space joins straight away
+      if (egg.state === "apart" && e.detail === 0) join(h);   // keyboard: Enter/Space joins straight away
     });
   });
-  hammer.addEventListener("click", hit);
   revealClose.addEventListener("click", closeReveal);
   reveal.addEventListener("click", e => { if (e.target === reveal) closeReveal(); });
   addEventListener("keydown", e => { if (e.key === "Escape") closeReveal(); });
-  addEventListener("resize", () => { if (egg.state === "joined") align(); });
 
   applyLang();
 })();

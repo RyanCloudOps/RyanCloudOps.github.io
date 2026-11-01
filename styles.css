@@ -78,50 +78,28 @@ h2 { font-size: clamp(30px, 4.6vw, 52px); line-height: 1.1; letter-spacing: -1.5
 .eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
 h1 { font-size: clamp(48px, 8vw, 112px); line-height: .95; letter-spacing: -4px; font-weight: 700; background: linear-gradient(90deg, var(--h-from), var(--h-to)); -webkit-background-clip: text; background-clip: text; color: transparent; }
 
-/* EASTER EGG */
-.egg-half { position: absolute; z-index: 3; width: 112px; aspect-ratio: 100 / 130; padding: 0; border: 0; background: none; touch-action: none; cursor: grab; animation: bob 3.4s var(--ease) infinite alternate; transition: filter .5s var(--ease), opacity .5s var(--ease); opacity: .16; }
-.egg-half:hover, .egg-half:focus-visible, .egg-half.dragging, .egg-half.near, .hero.egg-joined .egg-half { opacity: 1; }
-@media (hover: none) { .egg-half { opacity: .28; } }
-.egg-half svg { display: block; width: 100%; height: 100%; overflow: visible; }
-.egg-l { left: max(-48px, calc(12px - var(--gut))); top: 14%; --tilt: -14deg; }
-.egg-r { right: max(-48px, calc(12px - var(--gut))); top: 8%; --tilt: 12deg; animation-delay: -1.7s; }
-@keyframes bob { from { transform: translateY(0) rotate(var(--tilt)); } to { transform: translateY(-10px) rotate(calc(var(--tilt) * .6)); } }
-.egg-half .shell { fill: #f6f6f6; }
-.egg-half .deco { fill: #0b0b0b; }
-.egg-half .led { fill: #f6f6f6; }
-.egg-half .bin { fill: #0b0b0b; stroke: none; font: 700 13px "Geist Mono", ui-monospace, monospace; }
-.egg-half .zz { fill: none; stroke: #0b0b0b; stroke-width: 4; stroke-linejoin: round; }
-.egg-half .shine { fill: #ffffff; opacity: .9; }
-.egg-half .outline { fill: none; stroke: #0b0b0b; stroke-width: 3; }
-.egg-half .seam { fill: none; stroke: #0b0b0b; stroke-width: 3; stroke-linejoin: round; }
-.egg-half .crack { fill: none; stroke: #0b0b0b; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; opacity: 0; transition: opacity .15s; }
-.hero[data-cracks] .c1, .hero[data-cracks="2"] .c2, .hero[data-cracks="3"] .c2, .hero[data-cracks="3"] .c3 { opacity: 1; }
-.hero.peek .egg-half, .egg-half.near { filter: drop-shadow(0 0 16px color-mix(in srgb, var(--ink) 55%, transparent)); }
-.egg-half.dragging { z-index: 5; cursor: grabbing; animation-play-state: paused; }
-.egg-half.wiggle { animation: wiggle .5s var(--ease); }
-@keyframes wiggle { 25% { transform: rotate(calc(var(--tilt) - 12deg)); } 60% { transform: rotate(calc(var(--tilt) + 10deg)); } }
-.hero.egg-joined .egg-half { animation: none; transform: none; cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 64 64'%3E%3Crect x='28' y='24' width='8' height='38' rx='3' fill='%239a6a3a' stroke='%230b0b0b' stroke-width='3'/%3E%3Crect x='10' y='8' width='44' height='18' rx='4' fill='%233b3b3b' stroke='%230b0b0b' stroke-width='3'/%3E%3C/svg%3E") 16 8, pointer; }
-.egg-half.snap { transition: translate .4s var(--ease), filter .5s var(--ease); }
-.hero.egg-joined .egg-half.shake { animation: shake .3s var(--ease); }
-@keyframes shake { 25% { transform: translateX(-4px) rotate(-3deg); } 60% { transform: translateX(4px) rotate(3deg); } }
-.hero.egg-joined .egg-half.burst { pointer-events: none; transition: opacity .5s var(--ease), transform .6s var(--ease); opacity: 0; }
-.hero.egg-joined .egg-l.burst { transform: translate(-40px, 30px) rotate(-50deg); }
-.hero.egg-joined .egg-r.burst { transform: translate(40px, 30px) rotate(50deg); }
-.shard { position: absolute; z-index: 4; width: 14px; height: 12px; margin: -6px 0 0 -7px; background: #f6f6f6; border: 2px solid #0b0b0b; clip-path: polygon(50% 0, 100% 100%, 0 80%); pointer-events: none; animation: shard 1s var(--ease) forwards; }
-.shard:nth-child(odd) { background: #0b0b0b; }
-@keyframes shard { to { transform: translate(var(--dx), var(--dy)) rotate(var(--r)); opacity: 0; } }
-.egg-tip { position: absolute; z-index: 4; margin: 0; padding: 6px 14px; border-radius: 999px; background: var(--inv); color: var(--inv-ink); font-size: 14px; font-weight: 700; white-space: nowrap; opacity: 0; transform: translate(-50%, -100%) translateY(8px) scale(.9); transition: opacity .3s var(--ease), transform .5s var(--ease); pointer-events: none; }
-.egg-tip.show { opacity: 1; transform: translate(-50%, -100%); animation: pulse 1.2s var(--ease) .5s infinite alternate; }
-@keyframes pulse { to { transform: translate(-50%, -100%) scale(1.08); } }
-.hammer { position: absolute; z-index: 4; width: 56px; height: 56px; padding: 0; border: 0; background: none; opacity: 0; transition: opacity .3s var(--ease); }
-.hammer.show { opacity: 1; }
-.hammer.flip { transform: scaleX(-1); }
-.hammer svg { display: block; width: 100%; height: 100%; transform-origin: 50% 92%; transform: rotate(28deg); filter: drop-shadow(0 6px 8px rgba(0,0,0,.25)); }
-.hammer.show svg { animation: ready 1s var(--ease) infinite alternate; }
-@keyframes ready { to { transform: rotate(18deg); } }
-.hammer.swing svg { animation: swing .34s var(--ease); }
-@keyframes swing { 0% { transform: rotate(28deg); } 45% { transform: rotate(-62deg); } 100% { transform: rotate(28deg); } }
-
+/* EASTER EGG: two stars that blend into the sky; joined, they draw a constellation */
+.egg-half { position: absolute; z-index: 3; width: 44px; height: 44px; padding: 0; border: 0; background: none; touch-action: none; cursor: grab; color: var(--ink); opacity: .5; transition: opacity .4s var(--ease), transform .4s var(--ease), filter .4s var(--ease); }
+.egg-half svg { display: block; width: 100%; height: 100%; overflow: visible; animation: twinkle 3.6s ease-in-out infinite; }
+.egg-l { left: 11%; top: 38%; }
+.egg-r { right: 10%; top: 20%; }
+.egg-r svg { animation-delay: -1.8s; }
+@keyframes twinkle { 0%, 100% { transform: scale(.5); opacity: .55; } 50% { transform: scale(.78); opacity: 1; } }
+.egg-half:hover, .egg-half:focus-visible, .egg-half.near { opacity: 1; transform: scale(1.5); filter: drop-shadow(0 0 8px var(--ink)); }
+.egg-half.dragging { z-index: 5; cursor: grabbing; opacity: 1; transform: scale(1.5); filter: drop-shadow(0 0 10px var(--ink)); }
+.egg-half.snap { transition: translate .5s var(--ease), opacity .6s var(--ease); }
+.egg-half.wiggle svg { animation: wiggle .6s var(--ease); }
+@keyframes wiggle { 30% { transform: scale(1.2) rotate(40deg); } 60% { transform: scale(.9) rotate(-20deg); } }
+.con { position: absolute; z-index: 4; width: 210px; transform: translate(-50%, -50%); pointer-events: none; color: var(--ink); }
+.con svg { display: block; width: 100%; overflow: visible; filter: drop-shadow(0 0 6px color-mix(in srgb, var(--ink) 60%, transparent)); }
+.con polyline { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 1.1s var(--ease) .3s forwards; }
+.con polyline + polyline { animation-delay: 1s; }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+.con circle { fill: currentColor; transform-box: fill-box; transform-origin: center; animation: pop .6s var(--ease) both; }
+.con circle:nth-of-type(1) { animation-delay: .1s; } .con circle:nth-of-type(2) { animation-delay: .5s; } .con circle:nth-of-type(3) { animation-delay: .9s; } .con circle:nth-of-type(4) { animation-delay: 1.2s; } .con circle:nth-of-type(5) { animation-delay: 1.4s; }
+@keyframes pop { from { transform: scale(0); } to { transform: scale(1); } }
+.con text { fill: currentColor; font: 600 10px var(--mono); text-anchor: middle; letter-spacing: .25em; opacity: 0; animation: fade .8s var(--ease) 1.6s forwards; }
+@keyframes fade { to { opacity: .85; } }
 /* Reward overlay */
 .egg-reveal { overflow: hidden; position: fixed; inset: 0; z-index: 90; display: grid; place-items: center; padding: 24px; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); opacity: 0; transition: opacity .4s var(--ease); }
 .egg-reveal[hidden] { display: none; }
@@ -273,9 +251,9 @@ h1 .dot { color: var(--muted); -webkit-text-fill-color: var(--muted); }
   .bubble, .bubble.b-down, .bubble.b-egg { left: 56%; right: auto; top: 0; max-width: min(170px, 44vw); padding: 8px 14px; font-size: 12px; line-height: 16px; transform-origin: 0 100%; }
   .bubble.b-down::after { left: 4px; right: auto; box-shadow: -11px 12px 0 -3px var(--c); }
   .bubble::before { width: 22px; height: 22px; top: -8px; left: 12px; box-shadow: 18px -4px 0 2px var(--c), 38px 1px 0 -3px var(--c); }
-  .egg-half { width: 72px; }
-  .egg-l { left: -6px; top: 210px; }
-  .egg-r { right: -6px; top: 310px; }
+  .egg-half { width: 40px; height: 40px; }
+  .egg-l { left: 6%; top: 180px; }
+  .egg-r { right: 6%; top: 90px; }
   .hero-text { grid-row: 2; }
   .hero-cta { grid-column: 1; grid-row: 3; justify-self: start; justify-items: start; }
   .about { grid-template-columns: 1fr; gap: 28px; }
@@ -334,7 +312,7 @@ html:not(.no-intro) body.loading { overflow: hidden; }
 .cur-ring, .cur-dot { display: none; }
 @media (hover: hover) and (pointer: fine) {
   html.has-cur, html.has-cur a, html.has-cur button, html.has-cur [role="button"] { cursor: none; }
-  html.has-cur .egg-half, html.has-cur .scroller, html.has-cur .hero.egg-joined .egg-half { cursor: auto; }
+  html.has-cur .egg-half, html.has-cur .scroller { cursor: auto; }
   .cur-ring, .cur-dot { display: block; position: fixed; left: 0; top: 0; z-index: 300; pointer-events: none; border-radius: 50%; opacity: 0; transition: opacity .3s var(--ease); mix-blend-mode: difference; }
   .cur-ring { width: 34px; height: 34px; margin: -17px 0 0 -17px; border: 1px solid #fff; transition: opacity .3s var(--ease), width .35s var(--ease), height .35s var(--ease), margin .35s var(--ease), background .35s var(--ease); }
   .cur-dot { width: 6px; height: 6px; margin: -3px 0 0 -3px; background: #fff; }
@@ -360,12 +338,10 @@ html:not(.no-intro) body.loading { overflow: hidden; }
 .git .ref { opacity: .8; }
 
 /* Tribute */
-.egg-ribbon { width: 54px; height: 72px; fill: #0b0b0b; stroke: var(--ink); stroke-width: 1.6; stroke-linejoin: round; animation: hatch .8s var(--ease) both .2s; }
-.egg-tribute { font-size: 15px; letter-spacing: .02em; color: var(--muted); margin-top: -8px; }
-.egg-tribute strong { display: block; margin-top: 2px; font-size: clamp(18px, 2.4vw, 24px); font-weight: 600; color: var(--ink); letter-spacing: -.3px; }
+.egg-ribbon { position: absolute; top: 18px; left: 22px; width: 50px; height: 70px; filter: drop-shadow(0 0 1px rgba(255, 255, 255, .85)) drop-shadow(0 4px 8px rgba(0, 0, 0, .4)); animation: hatch .8s var(--ease) both .2s; }
+.egg-tribute strong { font-size: clamp(18px, 2.4vw, 24px); font-weight: 600; color: var(--ink); letter-spacing: -.3px; }
 .egg-sig { font-family: var(--mono); font-size: 12px; color: var(--muted); }
 .egg-sig .caret { background: var(--ink); width: 7px; height: 13px; }
-.egg-reveal::before { content: ""; position: absolute; top: 34px; left: -62px; width: 240px; height: 26px; background: #0b0b0b; border-block: 1px solid color-mix(in srgb, var(--ink) 40%, transparent); transform: rotate(-45deg); }
 
 /* Holographic keyboard shown while he types (synced in script.js: KBD) */
 .kbd { position: absolute; z-index: 1; left: 46.5%; top: 31%; width: 56%; padding: 8px; display: grid; gap: 4px; border-radius: 10px; background: rgba(8, 8, 8, .82); border: 1px solid rgba(255, 255, 255, .55); box-shadow: 0 0 24px rgba(255, 255, 255, .25), inset 0 0 14px rgba(255, 255, 255, .08); opacity: 0; transform: translateX(-50%) perspective(500px) rotateX(38deg) scale(.7); transform-origin: 50% 0; transition: opacity .35s var(--ease), transform .5s var(--ease); pointer-events: none; }
@@ -375,3 +351,37 @@ html:not(.no-intro) body.loading { overflow: hidden; }
 .kbd i.sp { flex: 0 0 52%; max-width: none; }
 .kbd i.hit { background: #fff; box-shadow: 0 0 10px #fff; }
 @media (max-width: 800px) { .kbd i { height: 9px; } .kbd { padding: 5px; gap: 3px; } }
+
+/* ====== Hidden Draco constellation (footer sky) ====== */
+.sky { position: relative; width: min(760px, 100%); margin: 0 auto; padding: 0 16px 8px; color: var(--ink); }
+.sky svg { display: block; width: 100%; overflow: visible; touch-action: manipulation; user-select: none; }
+.sky .star { cursor: default; }
+.sky .star .core { fill: currentColor; opacity: .32; transition: opacity .4s var(--ease); animation: skytw 4s ease-in-out infinite; }
+.sky .star:nth-of-type(odd) .core { animation-delay: -2s; }
+.sky .star .hit { fill: transparent; }
+.sky .star.lit .core { opacity: 1; filter: drop-shadow(0 0 6px currentColor); animation: none; }
+@keyframes skytw { 50% { opacity: .6; } }
+.sky .edge { stroke: currentColor; stroke-width: 1.3; stroke-linecap: round; opacity: 0; transition: opacity .6s var(--ease); filter: drop-shadow(0 0 4px currentColor); }
+.sky .edge.on { opacity: .8; }
+.sky .dragon { opacity: 0; pointer-events: none; transition: opacity .6s var(--ease); }
+.sky.done .dragon { opacity: 1; animation: sway 5s 3s ease-in-out infinite; }
+@keyframes sway { 50% { transform: translateY(-4px); } }
+.sky .dragon .body { fill: color-mix(in srgb, currentColor 7%, transparent); stroke: currentColor; stroke-width: 1.6; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; filter: drop-shadow(0 0 6px color-mix(in srgb, currentColor 70%, transparent)); }
+.sky .dragon .fin, .sky .dragon .head, .sky .dragon .leg, .sky .dragon .scale, .sky .dragon .pearl { fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linejoin: round; stroke-linecap: round; opacity: 0; filter: drop-shadow(0 0 5px color-mix(in srgb, currentColor 70%, transparent)); }
+.sky .dragon .scale { stroke-width: 1; }
+.sky .dragon .pearl circle { fill: color-mix(in srgb, currentColor 14%, transparent); }
+.sky .dragon .pearl path { stroke-width: 1.3; }
+.sky .dragon .eye { fill: currentColor; opacity: 0; }
+.sky.done .dragon .body { animation: skydraw 2.4s .2s cubic-bezier(.22, 1, .36, 1) forwards; }
+.sky.done .dragon .fin, .sky.done .dragon .head, .sky.done .dragon .leg, .sky.done .dragon .scale { animation: skyfade .8s 1.8s forwards; }
+.sky.done .dragon .eye { animation: skyfade .8s 2.2s forwards; }
+.sky.done .dragon .pearl { animation: skyfade .8s 2.4s forwards, skyglow 2.4s 3.2s ease-in-out infinite; }
+@keyframes skydraw { to { stroke-dashoffset: 0; } }
+@keyframes skyfade { to { opacity: 1; } }
+@keyframes skyglow { 50% { filter: drop-shadow(0 0 10px currentColor); } }
+.sky-quote { margin: -4px 0 36px; text-align: center; opacity: 0; transform: translateY(10px); transition: opacity .9s 2.4s var(--ease), transform .9s 2.4s var(--ease); }
+.sky.done .sky-quote { opacity: 1; transform: none; }
+.sky-quote q { display: block; font-size: clamp(22px, 4vw, 34px); font-weight: 700; letter-spacing: -1px; quotes: "«" "»"; text-wrap: balance; }
+.sky-quote cite { display: block; margin-top: 6px; font: 12px var(--mono); color: var(--muted); font-style: normal; letter-spacing: .08em; text-transform: uppercase; }
+.sky:not(.done) .sky-quote { visibility: hidden; transition: none; }
+@media (prefers-reduced-motion: reduce) { .sky .dragon .body { stroke-dashoffset: 0; animation: none !important; } .sky .dragon > *, .sky .dragon g > * { animation: none !important; opacity: 1; } .sky .dragon { animation: none !important; } .sky-quote { transition: none; } }
