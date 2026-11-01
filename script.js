@@ -221,17 +221,30 @@
   sc.addEventListener("pointermove", e => { if (down) sc.scrollLeft = sl - (e.clientX - sx); });
 
   // ---------- Hero character: pre-keyed clip (colour on top, alpha below) drawn in WebGL + speech clouds synced to it ----------
-  // assets/gary-hero.mp4 (15 s loop): 0–3 arms crossed · 3–5 points down · 5–9 looks around · 9–11 points right ·
-  // 11–12 finger to chin · 12–13.4 leans and points down-right at the egg half (EGG_SPOT) · 13.5–15 back to arms crossed
+  // assets/gary-hero.mp4 (15 s loop): 0–1 uncrosses · 1–2.5 waves hello · 3–4.8 points down · 5–7.8 types on an invisible keyboard (KBD) ·
+  // 9–10.3 thumbs up (with a wink) · 11.6–15 arms crossed again
   const BEATS = [
-    { id: "hi", from: 0.2, to: 2.9, es: "¡Hola! Bienvenido a mi portafolio 👋", en: "Hi! Welcome to my portfolio 👋" },
-    { id: "down", from: 3.1, to: 5, es: "Baja y mira lo que hago 👇", en: "Scroll down and see what I do 👇" },
+    { id: "hi", from: 0.5, to: 2.9, es: "¡Hola! Bienvenido a mi portafolio 👋", en: "Hi! Welcome to my portfolio 👋" },
+    { id: "down", from: 3.2, to: 4.9, es: "Baja y mira lo que hago 👇", en: "Scroll down and see what I do 👇" },
+    { id: "deploy", from: 5.0, to: 7.9, es: "Desplegando… 🚀", en: "Deploying… 🚀" },
   ];
+  const KBD = [4.9, 7.9];   // the holographic keyboard is visible while he types
   const PEEK = [];   // moments when the egg halves glow (none: the egg is meant to be found, not hinted)
-  const hero = $("#hero"), cv = $("#anim"), vid = $("#hero-vid"), poster = $("#hero-poster"), bubble = $("#bubble");
+  const hero = $("#hero"), cv = $("#anim"), vid = $("#hero-vid"), poster = $("#hero-poster"), bubble = $("#bubble"), kbd = $("#kbd");
   let beat = null;
   const egg = { state: "apart", hits: 0, solved: false, at: 0, moved: null, home: null };   // easter egg state (see below)
   const beatText = b => (b.done && egg.solved ? b.done : b)[lang];
+
+  // Holographic keyboard: rows of keys, a random one lights up now and then while it is visible
+  const ROWS = [12, 11, 10, 7];
+  kbd.innerHTML = ROWS.map((n, r) => `<div class="kr">${Array.from({ length: n }, (_, i) => `<i${r === 3 && i === 3 ? ' class="sp"' : ""}></i>`).join("")}</div>`).join("");
+  const keys = [...kbd.querySelectorAll("i")];
+  setInterval(() => {
+    if (!kbd.classList.contains("show")) return;
+    const k = keys[Math.floor(Math.random() * keys.length)];
+    k.classList.add("hit");
+    setTimeout(() => k.classList.remove("hit"), 140);
+  }, 85);
 
   function showBeat(b) {
     if (b === beat) return;
@@ -244,6 +257,7 @@
   }
   function syncTo(t) {
     showBeat(BEATS.find(b => t >= b.from && t < b.to) || null);
+    kbd.classList.toggle("show", t >= KBD[0] && t < KBD[1]);
     hero.classList.toggle("peek", egg.state === "apart" && (PEEK.some(([a, b]) => t >= a && t < b)));
   }
 

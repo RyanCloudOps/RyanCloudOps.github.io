@@ -73,8 +73,6 @@ h2 { font-size: clamp(30px, 4.6vw, 52px); line-height: 1.1; letter-spacing: -1.5
 .bubble::before { content: ""; position: absolute; z-index: -1; left: 18px; top: -11px; width: 30px; height: 30px; border-radius: 50%; background: var(--c); box-shadow: 24px -5px 0 3px var(--c), 52px 1px 0 -3px var(--c); }
 .bubble::after { content: ""; position: absolute; left: 4px; bottom: -16px; width: 14px; height: 14px; border-radius: 50%; background: var(--c); box-shadow: -11px 12px 0 -3px var(--c); }
 .bubble.show { opacity: 1; transform: none; }
-.bubble.b-down { left: auto; right: 74%; top: 22%; transform-origin: 100% 100%; }
-.bubble.b-down::after { left: auto; right: 4px; box-shadow: 11px 12px 0 -3px var(--c); }
 .bubble.b-egg { left: 84%; top: 13%; padding: 8px 16px; font-size: 13px; }
 .hero-text { grid-column: 1; grid-row: 2; align-self: end; }
 .eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
@@ -368,3 +366,12 @@ html:not(.no-intro) body.loading { overflow: hidden; }
 .egg-sig { font-family: var(--mono); font-size: 12px; color: var(--muted); }
 .egg-sig .caret { background: var(--ink); width: 7px; height: 13px; }
 .egg-reveal::before { content: ""; position: absolute; top: 34px; left: -62px; width: 240px; height: 26px; background: #0b0b0b; border-block: 1px solid color-mix(in srgb, var(--ink) 40%, transparent); transform: rotate(-45deg); }
+
+/* Holographic keyboard shown while he types (synced in script.js: KBD) */
+.kbd { position: absolute; z-index: 1; left: 46.5%; top: 31%; width: 56%; padding: 8px; display: grid; gap: 4px; border-radius: 10px; background: rgba(8, 8, 8, .82); border: 1px solid rgba(255, 255, 255, .55); box-shadow: 0 0 24px rgba(255, 255, 255, .25), inset 0 0 14px rgba(255, 255, 255, .08); opacity: 0; transform: translateX(-50%) perspective(500px) rotateX(38deg) scale(.7); transform-origin: 50% 0; transition: opacity .35s var(--ease), transform .5s var(--ease); pointer-events: none; }
+.kbd.show { opacity: 1; transform: translateX(-50%) perspective(500px) rotateX(38deg); }
+.kbd .kr { display: flex; justify-content: center; gap: 4px; }
+.kbd i { flex: 1; height: 15px; max-width: 26px; border-radius: 3px; border: 1px solid rgba(255, 255, 255, .6); transition: background .12s, box-shadow .12s; }
+.kbd i.sp { flex: 0 0 52%; max-width: none; }
+.kbd i.hit { background: #fff; box-shadow: 0 0 10px #fff; }
+@media (max-width: 800px) { .kbd i { height: 9px; } .kbd { padding: 5px; gap: 3px; } }
