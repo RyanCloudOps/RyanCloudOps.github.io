@@ -25,6 +25,6 @@ Abre http://localhost:5500
 
 ## Publicar en GitHub Pages
 
-1. Sube estos archivos a la rama `main` del repo `Page`.
+1. Sube estos archivos a la rama `main` del repo `RyanCloudOps.github.io`.
 2. Settings → Pages → Source: *Deploy from a branch* → `main` / `root`.
-3. La web queda en https://ryancloudops.github.io/Page/
+3. La web queda en https://ryancloudops.github.io/
