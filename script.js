@@ -137,9 +137,124 @@
   const root = document.documentElement;
   // Always starts dark; a manual switch only lasts for the current tab session
   root.dataset.theme = sessionStorage.getItem("pf-theme") || "dark";
-  $("#theme-btn").addEventListener("click", () => {
+  const flipTheme = () => {
     root.dataset.theme = root.dataset.theme === "dark" ? "light" : "dark";
     sessionStorage.setItem("pf-theme", root.dataset.theme);
+  };
+
+  /* Theme transition: the new theme burns in from the button with a ragged, flame-like edge.
+     A noise "arrival time" map is drawn once into an image; an SVG threshold filter turns it
+     into a mask for ::view-transition-new(root), and moving the threshold every frame
+     advances the edge smoothly. Falls back to an instant switch. */
+  const themeFx = (() => {
+    if (!document.startViewTransition) return null;
+    const FX = { dur: 1000, mix: .74, freq: 5, warp: 1.3, soft: .015, oct: 6 };
+    const NS = "http://www.w3.org/2000/svg";
+    const holder = document.createElement("div");
+    holder.setAttribute("aria-hidden", "true");
+    holder.className = "fx-defs";
+    holder.innerHTML =
+      `<svg xmlns="${NS}" width="0" height="0"><defs>` +
+      `<filter id="fx-th" x="0" y="0" width="1" height="1" color-interpolation-filters="sRGB"><feComponentTransfer>` +
+      `<feFuncR type="linear"/><feFuncG type="linear"/><feFuncB type="linear"/><feFuncA type="linear" slope="0" intercept="1"/>` +
+      `</feComponentTransfer></filter>` +
+      `<mask id="fx-mask" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse" x="0" y="0" width="1" height="1">` +
+      `<image x="0" y="0" width="1" height="1" preserveAspectRatio="none" filter="url(#fx-th)"/></mask>` +
+      `</defs></svg>`;
+    document.body.appendChild(holder);
+    const mask = holder.querySelector("mask"), image = holder.querySelector("image");
+    const funcs = [...holder.querySelectorAll("feFuncR,feFuncG,feFuncB")];
+    const setT = t => funcs.forEach(f => { f.setAttribute("slope", -1 / FX.soft); f.setAttribute("intercept", t / FX.soft); });
+
+    function noise(seed) {
+      const P = new Uint8Array(512), V = new Float32Array(256);
+      let s = seed >>> 0 || 1;
+      const rnd = () => (s = (s * 1664525 + 1013904223) >>> 0) / 4294967296;
+      for (let i = 0; i < 256; i++) { P[i] = i; V[i] = rnd(); }
+      for (let i = 255; i > 0; i--) { const j = (rnd() * (i + 1)) | 0; [P[i], P[j]] = [P[j], P[i]]; }
+      for (let i = 0; i < 256; i++) P[i + 256] = P[i];
+      const fade = t => t * t * (3 - 2 * t);
+      const n2 = (x, y) => {
+        const xi = Math.floor(x), yi = Math.floor(y), u = fade(x - xi), v = fade(y - yi), X = xi & 255, Y = yi & 255;
+        const a = V[P[P[X] + Y]], b = V[P[P[X + 1] + Y]], c = V[P[P[X] + Y + 1]], d = V[P[P[X + 1] + Y + 1]];
+        return a + (b - a) * u + (c - a) * v + (a - b - c + d) * u * v;
+      };
+      return (x, y, oct) => {
+        let sum = 0, amp = .5, f = 1, norm = 0;
+        for (let o = 0; o < oct; o++) { sum += amp * n2(x * f, y * f); norm += amp; amp *= .5; f *= 2.03; }
+        return sum / norm;
+      };
+    }
+    function fieldURL(W, H, cx, cy) {
+      const S = 4, w = Math.ceil(W / S), h = Math.ceil(H / S), ox = cx / S, oy = cy / S;
+      const fbm = noise(Math.random() * 1e9);
+      const dmax = Math.max(Math.hypot(ox, oy), Math.hypot(w - ox, oy), Math.hypot(ox, h - oy), Math.hypot(w - ox, h - oy));
+      const F = new Float32Array(w * h);
+      let mn = Infinity, mx = -Infinity;
+      for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+        const px = (x / h) * FX.freq, py = (y / h) * FX.freq;
+        const qx = fbm(px + 1.7, py + 9.2, 4), qy = fbm(px + 8.3, py + 2.8, 4);
+        const n = 1 - Math.abs(2 * fbm(px + FX.warp * (qx - .5) * 2, py + FX.warp * (qy - .5) * 2, FX.oct) - 1);
+        const f = FX.mix * (Math.hypot(x - ox, y - oy) / dmax) + (1 - FX.mix) * n;
+        F[y * w + x] = f;
+        if (f < mn) mn = f; if (f > mx) mx = f;
+      }
+      const cv = document.createElement("canvas"); cv.width = w; cv.height = h;
+      const ctx = cv.getContext("2d"), img = ctx.createImageData(w, h), D = img.data;
+      for (let i = 0; i < F.length; i++) {
+        D[i * 4] = D[i * 4 + 1] = D[i * 4 + 2] = Math.round(((F[i] - mn) / (mx - mn)) * 255);
+        D[i * 4 + 3] = 255;
+      }
+      ctx.putImageData(img, 0, 0);
+      return cv.toDataURL("image/png");
+    }
+
+    // Prepared ahead of time (and decoded) so the click starts instantly; a new shape each time.
+    let ready = false, key = "";
+    const prepare = () => {
+      const r = $("#theme-btn").getBoundingClientRect(), W = innerWidth, H = innerHeight;
+      const k = [W, H, Math.round(r.left), Math.round(r.top)].join("|");
+      if (ready && key === k) return;
+      const url = fieldURL(W, H, r.left + r.width / 2, r.top + r.height / 2);
+      [mask, image].forEach(el => { el.setAttribute("width", W); el.setAttribute("height", H); });
+      image.setAttribute("href", url);
+      key = k;
+      const pre = new Image(); pre.src = url;
+      pre.decode().catch(() => {}).then(() => { ready = true; });
+    };
+    const idle = cb => (window.requestIdleCallback ? requestIdleCallback(cb, { timeout: 2000 }) : setTimeout(cb, 300));
+    idle(prepare);
+    let rz;
+    addEventListener("resize", () => { ready = false; clearTimeout(rz); rz = setTimeout(() => idle(prepare), 300); });
+
+    let busy = false;
+    return () => {
+      if (busy) return;
+      busy = true;
+      if (!ready) prepare();
+      ready = false;
+      const T0 = .06, T1 = 1 + FX.soft;
+      const at = p => T0 + (T1 - T0) * (1 - Math.pow(1 - p, 2.2));
+      setT(at(0));
+      root.classList.add("fx-theme");
+      const vt = document.startViewTransition(flipTheme);
+      vt.ready.then(() => {
+        root.animate({ opacity: [1, 1] }, { duration: FX.dur, pseudoElement: "::view-transition-new(root)" });
+        const start = performance.now();
+        const tick = now => {
+          const p = Math.min(1, Math.max(0, (now - start) / FX.dur));
+          setT(at(p));
+          if (p < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      }).catch(() => {});
+      vt.finished.finally(() => { root.classList.remove("fx-theme"); busy = false; idle(prepare); });
+    };
+  })();
+
+  $("#theme-btn").addEventListener("click", () => {
+    if (themeFx && !matchMedia("(prefers-reduced-motion: reduce)").matches) themeFx();
+    else flipTheme();
   });
 
   // ---------- ID card ----------

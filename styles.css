@@ -385,3 +385,8 @@ html:not(.no-intro) body.loading { overflow: hidden; }
 .sky-quote cite { display: block; margin-top: 6px; font: 12px var(--mono); color: var(--muted); font-style: normal; letter-spacing: .08em; text-transform: uppercase; }
 .sky:not(.done) .sky-quote { visibility: hidden; transition: none; }
 @media (prefers-reduced-motion: reduce) { .sky .dragon .body { stroke-dashoffset: 0; animation: none !important; } .sky .dragon > *, .sky .dragon g > * { animation: none !important; opacity: 1; } .sky .dragon { animation: none !important; } .sky-quote { transition: none; } }
+
+/* ===== Cambio de tema con borde de fuego (View Transitions + máscara SVG) ===== */
+.fx-defs { position: fixed; width: 0; height: 0; overflow: hidden; pointer-events: none; }
+.fx-theme::view-transition-old(root), .fx-theme::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
+.fx-theme::view-transition-new(root) { z-index: 2; -webkit-mask: url(#fx-mask); mask: url(#fx-mask); }
