@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="200" viewBox="0 0 820 200" role="img" aria-label="Portafolio · Gary Flores — Systems Engineer → Cloud Architect">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#000"/>
+      <stop offset="1" stop-color="#1b1f27"/>
+    </linearGradient>
+  </defs>
+  <rect x=".5" y=".5" width="819" height="199" rx="12" fill="url(#g)" stroke="#30363d"/>
+  <text x="410" y="52" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Consolas,monospace" font-size="15" font-weight="700" fill="#7ee787">$ deploy --env production --portfolio</text>
+  <text x="410" y="112" text-anchor="middle" font-family="-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="46" font-weight="700" fill="#fff">Portafolio · Gary Flores</text>
+  <text x="410" y="156" text-anchor="middle" font-family="-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="20" fill="#8b949e">Systems Engineer → Cloud Architect</text>
+</svg>

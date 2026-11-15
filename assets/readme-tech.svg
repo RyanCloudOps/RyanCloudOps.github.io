@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="460" height="104" viewBox="0 0 460 104" role="img" aria-label="Tecnologías: HTML5, CSS3, JavaScript, WebGL y Canvas">
+  <style>
+    .t{fill:#1b1f27;stroke:#30363d}
+    .l{font:600 12px 'Segoe UI',Helvetica,Arial,sans-serif;fill:#8b949e;text-anchor:middle}
+    .b{font-family:'Segoe UI',Helvetica,Arial,sans-serif;font-weight:800;text-anchor:middle}
+  </style>
+  <!-- HTML5 -->
+  <g transform="translate(14,4)">
+    <rect class="t" x=".5" y=".5" width="64" height="64" rx="14"/>
+    <path d="M14 10h37l-3.4 38L32.5 53 17.4 48z" fill="#e34f26"/>
+    <path d="M32.5 13v37l12.2-3.4L47.6 13z" fill="#ef652a"/>
+    <text class="b" x="32.5" y="42" font-size="22" fill="#fff">5</text>
+    <text class="l" x="32.5" y="86">HTML5</text>
+  </g>
+  <!-- CSS3 -->
+  <g transform="translate(104,4)">
+    <rect class="t" x=".5" y=".5" width="64" height="64" rx="14"/>
+    <path d="M14 10h37l-3.4 38L32.5 53 17.4 48z" fill="#1572b6"/>
+    <path d="M32.5 13v37l12.2-3.4L47.6 13z" fill="#33a9dc"/>
+    <text class="b" x="32.5" y="42" font-size="22" fill="#fff">3</text>
+    <text class="l" x="32.5" y="86">CSS3</text>
+  </g>
+  <!-- JavaScript -->
+  <g transform="translate(194,4)">
+    <rect class="t" x=".5" y=".5" width="64" height="64" rx="14"/>
+    <rect x="13" y="13" width="39" height="39" rx="3" fill="#f7df1e"/>
+    <text class="b" x="40" y="47" font-size="17" fill="#000">JS</text>
+    <text class="l" x="32.5" y="86">JavaScript</text>
+  </g>
+  <!-- WebGL -->
+  <g transform="translate(284,4)">
+    <rect class="t" x=".5" y=".5" width="64" height="64" rx="14"/>
+    <path d="M32.5 12l17 9.8v19.6l-17 9.8-17-9.8V21.8z" fill="none" stroke="#e6edf3" stroke-width="2.4" stroke-linejoin="round"/>
+    <path d="M15.5 21.8l17 9.8 17-9.8M32.5 31.6v19.6" fill="none" stroke="#e6edf3" stroke-width="2.4" stroke-linejoin="round"/>
+    <path d="M32.5 31.6l17-9.8v19.6l-17 9.8z" fill="#990000" opacity=".85"/>
+    <text class="l" x="32.5" y="86">WebGL</text>
+  </g>
+  <!-- Canvas -->
+  <g transform="translate(374,4)">
+    <rect class="t" x=".5" y=".5" width="64" height="64" rx="14"/>
+    <rect x="13" y="15" width="39" height="31" rx="3" fill="none" stroke="#e6edf3" stroke-width="2.4"/>
+    <path d="M17 40l8-9 6 6 5-5 12 8" fill="none" stroke="#7ee787" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="44" cy="23" r="3" fill="#f7df1e"/>
+    <path d="M24 52h17" stroke="#e6edf3" stroke-width="2.4" stroke-linecap="round"/>
+    <text class="l" x="32.5" y="86">Canvas</text>
+  </g>
+</svg>
